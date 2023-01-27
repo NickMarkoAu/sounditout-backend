@@ -24,19 +24,19 @@ spring:
         order_inserts: true
         order_updates: true
         create_empty_composites.enabled: true
-                show_sql: true
-                format_sql: true
+#                show_sql: true
+#                format_sql: true
   security:
     oauth2:
       client:
         registration:
           cognito:
-            clientId: clientId
-            clientSecret: clientSecret
+            clientId: 6an5knq5f1uv3utcpj3s3mgu8a
+            clientSecret: 
             scope: openid
             redirect-uri: http://localhost:8080/login/oauth2/code/cognito
-            clientName: clientName
+            clientName: EchoCap
         provider:
           cognito:
-            issuerUri: https://cognito-idp.{region}.amazonaws.com/{poolId}
+            issuerUri: https://cognito-idp.ap-southeast-2.amazonaws.com/ap-southeast-2_kafumYAea
             user-name-attribute: cognito:username
