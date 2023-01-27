@@ -36,4 +36,11 @@ public class Song implements Serializable {
         this.tags = tags;
         this.youtubeVideoId = youtubeVideoId;
     }
+
+    public String toPromptString() {
+        return "Song{" +
+                "name='" + name + '\'' +
+                ", artist='" + artist + '\'' +
+                '}';
+    }
 }

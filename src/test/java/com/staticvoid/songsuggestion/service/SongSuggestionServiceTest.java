@@ -1,11 +1,8 @@
 package com.staticvoid.songsuggestion.service;
 
 import com.staticvoid.image.domain.Image;
-import com.staticvoid.image.repository.ImageRepository;
 import com.staticvoid.songsuggestion.domain.Song;
-import com.staticvoid.songsuggestion.repository.SongRepository;
 import lombok.extern.slf4j.Slf4j;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
@@ -189,7 +186,7 @@ class SongSuggestionServiceTest {
             Image image = new Image();
             image.setFile(file);
             List<String> genres = List.of("Rock", "Hip hop", "Country");
-            Song[] songs = songSuggestionService.songSuggestions(image, genres);
+            Song[] songs = songSuggestionService.songSuggestionsWithGenres(image, genres);
             log.info("Songs: {}", Arrays.toString(songs));
 
             assertEquals(songs.length, 5);
