@@ -28,19 +28,20 @@ public class SongDto implements Serializable {
         return song;
     }
 
-    private void toDto(Song song) {
+    public static SongDto toDto(Song song) {
         ObjectMapper mapper = new ObjectMapper();
-
-        this.id = song.getId();
-        this.imageId = song.getImageId();
-        this.userId = song.getUserId();
-        this.name = song.getName();
-        this.artist = song.getArtist();
+        SongDto songDto = new SongDto();
+        songDto.id = song.getId();
+        songDto.imageId = song.getImageId();
+        songDto.userId = song.getUserId();
+        songDto.name = song.getName();
+        songDto.artist = song.getArtist();
         try {
-            this.tags = mapper.readValue(song.getTags(), String[].class);
+            songDto.tags = mapper.readValue(song.getTags(), String[].class);
         } catch(Exception e) {
             throw new RuntimeException("Could not deserialise tags");
         }
-        this.youtubeVideoId = song.getYoutubeVideoId();
+        songDto.youtubeVideoId = song.getYoutubeVideoId();
+        return songDto;
     }
 }
