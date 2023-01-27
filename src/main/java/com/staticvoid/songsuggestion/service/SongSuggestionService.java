@@ -2,6 +2,7 @@ package com.staticvoid.songsuggestion.service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.staticvoid.image.domain.Image;
+import com.staticvoid.image.domain.ImageDto;
 import com.staticvoid.image.recognition.service.ImageRecognitionService;
 import com.staticvoid.image.repository.ImageRepository;
 import com.staticvoid.songsuggestion.domain.Song;
@@ -103,7 +104,7 @@ public class SongSuggestionService {
     }
 
     public final Song[] reloadSongSuggestions(Image image) {
-        List<String>tags = imageRecognitionService.detectImageLabels(image);
+        List<String>tags = Arrays.asList(ImageDto.toDto(image).getTags());
         return songSuggestions(tags, image.getId(), true);
     }
 
