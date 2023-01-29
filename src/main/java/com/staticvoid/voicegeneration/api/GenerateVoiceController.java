@@ -5,6 +5,7 @@ import com.staticvoid.image.domain.Image;
 import com.staticvoid.text.service.TextGenerationService;
 import com.staticvoid.texttovoice.service.TextToVoiceService;
 import com.staticvoid.voicetotext.service.VoiceToTextService;
+import lombok.RequiredArgsConstructor;
 import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,20 +18,13 @@ import java.io.IOException;
 import java.io.InputStream;
 
 @RestController
+@RequiredArgsConstructor
 public class GenerateVoiceController {
 
     private final VoiceToTextService voiceToTextService;
     private final TextGenerationService textGenerationService;
     private final TextToVoiceService textToVoiceService;
     private final StorageService storageService;
-
-    @Autowired
-    public GenerateVoiceController(VoiceToTextService voiceToTextService, TextGenerationService textGenerationService, TextToVoiceService textToVoiceService, StorageService storageService) {
-        this.voiceToTextService = voiceToTextService;
-        this.textGenerationService = textGenerationService;
-        this.textToVoiceService = textToVoiceService;
-        this.storageService = storageService;
-    }
 
     @GetMapping("/voice/")
     public File generateVoiceFromVoicePrompt(@RequestParam("file") MultipartFile file) throws Exception {

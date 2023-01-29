@@ -10,6 +10,7 @@ import com.staticvoid.songsuggestion.domain.SongDto;
 import com.staticvoid.songsuggestion.repository.SongRepository;
 import com.staticvoid.text.service.TextGenerationService;
 import com.youtube.service.YoutubeService;
+import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,21 +24,12 @@ import java.util.stream.Collectors;
 
 @Service
 @Slf4j
+@AllArgsConstructor
 public class SongSuggestionService {
     private final TextGenerationService textGenerationService;
     private final ImageRecognitionService imageRecognitionService;
     private final YoutubeService youtubeService;
-    @Autowired
-    private SongRepository songRepository;
-
-    @Autowired
-    private ImageRepository imageRepository;
-
-    public SongSuggestionService() {
-        this.textGenerationService = new TextGenerationService();
-        this.imageRecognitionService = new ImageRecognitionService();
-        this.youtubeService = new YoutubeService();
-    }
+    private final SongRepository songRepository;
 
     public final Song[] songSuggestions(List<String> tags, String imageId, Boolean refresh) {
         //TODO get these prompts from resource files

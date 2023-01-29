@@ -20,13 +20,13 @@ public class SongSuggestionController {
     private final StorageService storageService;
     private final ImageRepository imageRepository;
 
-    @PostMapping("/songs/")
+    @GetMapping("/api/songs/")
     public Song[] suggestSongsFromImage(@RequestParam("file") MultipartFile file) {
         Image convFile = storageService.store(file);
         return songSuggestionService.songSuggestions(convFile);
     }
 
-    @PostMapping("/reload-songs/")
+    @GetMapping("/api/reload-songs/")
     public Song[] reloadSongSuggestions(@RequestParam("imageId") Long imageId) {
         Image image = imageRepository.getReferenceById(imageId);
         return songSuggestionService.reloadSongSuggestions(image);
