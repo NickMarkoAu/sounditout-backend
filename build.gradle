@@ -25,8 +25,9 @@ dependencies {
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.7.2'
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.7.2'
 
-    implementation 'com.theokanning.openai-gpt3-java:api:0.9.0'
-    implementation 'com.theokanning.openai-gpt3-java:client:0.9.0'
+    implementation 'com.theokanning.openai-gpt3-java:api:0.11.0'
+    implementation 'com.theokanning.openai-gpt3-java:client:0.11.0'
+    implementation 'com.theokanning.openai-gpt3-java:service:0.11.0'
 
     implementation 'org.springframework.boot:spring-boot-starter-data-rest'
     implementation 'org.springframework.boot:spring-boot-starter-security'
@@ -34,9 +35,11 @@ dependencies {
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
     annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
+
     testImplementation 'org.springframework.security:spring-security-test'
     implementation 'org.springframework.security:spring-security-oauth2-client'
     implementation 'org.springframework.security:spring-security-oauth2-jose'
+    implementation 'io.jsonwebtoken:jjwt-api:0.11.2'
 
     implementation 'org.liquibase:liquibase-core'
     implementation 'org.springframework.session:spring-session-jdbc'
@@ -60,12 +63,11 @@ dependencies {
     implementation 'com.amazonaws:aws-java-sdk-rekognition:1.12.389'
     implementation 'com.amazonaws:aws-java-sdk-cognitoidentity'
 
-    implementation 'se.michaelthelin.spotify:spotify-web-api-java:7.3.0'
+    implementation 'se.michaelthelin.spotify:spotify-web-api-java:8.0.0'
 
     implementation 'commons-io:commons-io:2.11.0'
 
     compileOnly 'com.google.api-client:google-api-client:1.23.0'
-    implementation 'com.google.apis:google-api-services-youtube:v3-rev222-1.25.0'
 
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa:2.7.8'
     implementation 'org.springframework.boot:spring-boot-starter-jdbc'

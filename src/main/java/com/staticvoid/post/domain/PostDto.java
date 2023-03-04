@@ -20,6 +20,7 @@ public class PostDto implements Serializable {
     private List<CommentDto> comments;
     private Date date;
     private Long likes;
+    private PostPrivacy privacy;
 
     public static PostDto toDto(Post entity) {
         PostDto dto = new PostDto();
@@ -30,6 +31,7 @@ public class PostDto implements Serializable {
         dto.setComments(CommentDto.toDto(entity.getComments()));
         dto.setDate(entity.getDate());
         dto.setLikes(entity.getLikes());
+        dto.setPrivacy(entity.getPrivacy());
         return dto;
     }
 
@@ -42,6 +44,7 @@ public class PostDto implements Serializable {
         post.setComments(comments.stream().map(CommentDto::toEntity).collect(Collectors.toList()));
         post.setDate(date);
         post.setLikes(likes);
+        post.setPrivacy(privacy);
         return post;
     }
 }

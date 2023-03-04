@@ -52,5 +52,7 @@ public class Post {
 
     private Long likes;
 
+    private PostPrivacy privacy;
 
 }
+

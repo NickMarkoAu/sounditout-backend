@@ -30,7 +30,7 @@ public class PostService {
      * @param pageable
      * @return
      */
-    public Page<PostDto> getPostsForUser(UserDto user, Pageable pageable) {
+    public Page<PostDto> getFeedPostsForUser(UserDto user, Pageable pageable) {
         List<User> following = userRepository.findById(user.getId()).orElseThrow().getFollowing();
         List<PostDto> posts = postRepository.findByUsers(following, pageable).stream().map(PostDto::toDto).collect(Collectors.toList());
         return new PageImpl<>(posts, pageable, posts.size());

@@ -1,5 +1,6 @@
 package com.staticvoid.songsuggestion.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.Data;
 
@@ -7,6 +8,7 @@ import java.io.Serializable;
 import java.util.Arrays;
 
 @Data
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class SongDto implements Serializable {
     private Long id;
     private String imageId;
@@ -15,6 +17,7 @@ public class SongDto implements Serializable {
     private String artist;
     private String[] tags;
     private String youtubeVideoId;
+    private String previewUrl;
 
     public Song toEntity() {
         Song song = new Song();
@@ -25,6 +28,7 @@ public class SongDto implements Serializable {
         song.setArtist(artist);
         song.setTags(Arrays.toString(tags));
         song.setYoutubeVideoId(youtubeVideoId);
+        song.setPreviewUrl(previewUrl);
         return song;
     }
 
@@ -42,6 +46,7 @@ public class SongDto implements Serializable {
             throw new RuntimeException("Could not deserialise tags");
         }
         songDto.youtubeVideoId = song.getYoutubeVideoId();
+        songDto.previewUrl = song.getPreviewUrl();
         return songDto;
     }
 }

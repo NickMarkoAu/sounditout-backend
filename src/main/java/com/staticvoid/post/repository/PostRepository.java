@@ -14,8 +14,8 @@ import java.util.List;
 @Repository
 public interface PostRepository extends JpaRepository<Post, Long> {
 
-    @Query(value = "SELECT * FROM Post WHERE user IN (?1) ORDER BY date ASC",
-            countQuery = "SELECT COUNT(*) FROM Post WHERE user IN (?1)",
+    @Query(value = "SELECT * FROM Post WHERE user IN (?1) AND privacy LIKE 'FRIENDS' ORDER BY date ASC",
+            countQuery = "SELECT COUNT(*) FROM Post WHERE user IN (?1) AND privacy LIKE 'FRIENDS'",
             nativeQuery = true)
     Page<Post> findByUsers(List<User> following, Pageable pageable);
 }

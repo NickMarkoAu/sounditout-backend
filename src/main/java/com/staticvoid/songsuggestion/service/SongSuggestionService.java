@@ -1,22 +1,18 @@
 package com.staticvoid.songsuggestion.service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.spotify.service.SpotifyService;
 import com.staticvoid.image.domain.Image;
 import com.staticvoid.image.domain.ImageDto;
 import com.staticvoid.image.recognition.service.ImageRecognitionService;
-import com.staticvoid.image.repository.ImageRepository;
 import com.staticvoid.songsuggestion.domain.Song;
 import com.staticvoid.songsuggestion.domain.SongDto;
 import com.staticvoid.songsuggestion.repository.SongRepository;
 import com.staticvoid.text.service.TextGenerationService;
-import com.youtube.service.YoutubeService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.io.IOException;
-import java.security.GeneralSecurityException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -28,16 +24,15 @@ import java.util.stream.Collectors;
 public class SongSuggestionService {
     private final TextGenerationService textGenerationService;
     private final ImageRecognitionService imageRecognitionService;
-    private final YoutubeService youtubeService;
     private final SongRepository songRepository;
+    private final SpotifyService spotifyService;
 
     public final Song[] songSuggestions(List<String> tags, String imageId, Boolean refresh) {
         //TODO get these prompts from resource files
         //TODO try removing bias by taking out song suggestion
-        //TODO work on prompt design so it doesn't return any fake songs
-        String prompt = String.format("List 5 real songs in json format that are associated with these tags: %s \n use this json format" + "\n [\n" + "{\n" + "\"name\": \"Empire State of Mind\",\n" + "\"artist\": \"Jay-Z ft. Alicia Keys\",\n" + "\"tags\": [\"city\", \"urban\", \"skyscraper\", \"metropolis\", \"downtown\"]\n" + "}]", tags.toString());
+        String prompt = String.format("List 5 real songs in json format, that have been released publicly, that are associated with these tags: %s \n use this json format" + "\n [\n" + "{\n" + "\"name\": \"Empire State of Mind\",\n" + "\"artist\": \"Jay-Z ft. Alicia Keys\",\n" + "\"releasedYear\": \"2009\",\n" + "\"tags\": [\"city\", \"urban\", \"skyscraper\", \"metropolis\", \"downtown\"]\n" + "}]", tags.toString());
         if(refresh) {
-            Song[] existingSongs = songRepository.findByImage_id(imageId).toArray(new Song[0]);
+            Song[] existingSongs = songRepository.findByImageId(imageId).toArray(new Song[0]);
             String additionalPrompt = String.format("\n Do not include any of these songs %s", toPromptString(existingSongs));
             prompt = prompt + additionalPrompt;
         }
@@ -64,10 +59,11 @@ public class SongSuggestionService {
             SongDto[] songs = mapper.readValue(response, SongDto[].class);
             List<Song> songList = new ArrayList<>();
             for (SongDto song : songs) {
-                this.addVideoId(song);
                 song.setImageId(imageId);
                 Song songEntity = song.toEntity();
+                //TODO enable this once repos are set up properly
 //                songRepository.save(songEntity);
+                addSpotifyPreview(songEntity);
                 songList.add(songEntity);
             }
 
@@ -77,12 +73,8 @@ public class SongSuggestionService {
         }
     }
 
-    private void addVideoId(SongDto song) {
-        try {
-            song.setYoutubeVideoId(youtubeService.getResponse(song.getName() + " " + song.getArtist()).get(0).getId().getVideoId());
-        } catch (GeneralSecurityException | IOException e) {
-            throw new RuntimeException("Could not add video id", e);
-        }
+    private void addSpotifyPreview(Song song) {
+        song.setPreviewUrl(spotifyService.getTrack(song));
     }
 
     public final Song[] songSuggestions(Image image) {

@@ -1,7 +1,9 @@
 package com.staticvoid;
 
 import com.staticvoid.image.repository.ImageRepository;
+import com.staticvoid.post.repository.PostRepository;
 import com.staticvoid.songsuggestion.repository.SongRepository;
+import com.staticvoid.user.respository.UserRepository;
 import config.ApplicationProperties;
 import liquibase.repackaged.org.apache.commons.lang3.StringUtils;
 import lombok.extern.slf4j.Slf4j;
@@ -18,7 +20,7 @@ import java.net.InetAddress;
 import java.net.UnknownHostException;
 
 @SpringBootApplication(exclude = {DataSourceAutoConfiguration.class })
-@EnableJpaRepositories(basePackageClasses  = {SongRepository.class, ImageRepository.class})
+@EnableJpaRepositories(basePackageClasses  = {SongRepository.class, ImageRepository.class, PostRepository.class, UserRepository.class})
 @Slf4j
 @EnableConfigurationProperties(ApplicationProperties.class)
 @ComponentScan(basePackages = { "com.staticvoid.*" })
