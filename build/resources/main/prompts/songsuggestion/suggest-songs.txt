@@ -1,9 +1,0 @@
-List 5 real songs in json format that are associated with these tags: %s
-Use this json format
-[
-  {
-    "name": "Empire State of Mind",
-    "artist": "Jay-Z ft. Alicia Keys",
-    "tags": ["city", "urban", "skyscraper", "metropolis", "downtown"]
-  }
-]
