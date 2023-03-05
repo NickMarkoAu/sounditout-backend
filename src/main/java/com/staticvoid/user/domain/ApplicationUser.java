@@ -11,7 +11,7 @@ import java.util.List;
 
 @Entity
 @Data
-public class User implements Serializable {
+public class ApplicationUser implements Serializable {
     @Id
     private String id;
 
@@ -19,10 +19,11 @@ public class User implements Serializable {
     private String email;
     private Date dateOfBirth;
     private Long tokens;
+    private String password;
 
     @OneToMany
-    private List<User> followers;
+    private List<ApplicationUser> followers;
 
     @OneToMany
-    private List<User> following;
+    private List<ApplicationUser> following;
 }

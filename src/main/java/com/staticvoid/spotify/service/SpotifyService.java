@@ -1,7 +1,8 @@
-package com.spotify.service;
+package com.staticvoid.spotify.service;
 
 import com.neovisionaries.i18n.CountryCode;
 import com.staticvoid.songsuggestion.domain.Song;
+import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.hc.core5.http.ParseException;
 import org.springframework.stereotype.Service;
@@ -21,6 +22,7 @@ import java.util.Objects;
 
 @Service
 @Slf4j
+@AllArgsConstructor
 public class SpotifyService {
 
     //TODO move these to config/secret manager

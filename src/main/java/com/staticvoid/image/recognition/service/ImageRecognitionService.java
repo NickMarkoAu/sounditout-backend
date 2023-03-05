@@ -39,8 +39,7 @@ public class ImageRecognitionService {
     public List<String> detectImageLabels(com.staticvoid.image.domain.Image image) {
         List<String> tags = detectImageLabels(image.getFile());
         image.setTags(tags.toString());
-        //TODO imageRepository is null
-//        imageRepository.save(image);
+        imageRepository.save(image);
         return tags;
     }
 

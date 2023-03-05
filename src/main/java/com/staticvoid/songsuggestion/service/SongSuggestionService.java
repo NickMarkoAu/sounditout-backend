@@ -1,7 +1,7 @@
 package com.staticvoid.songsuggestion.service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.spotify.service.SpotifyService;
+import com.staticvoid.spotify.service.SpotifyService;
 import com.staticvoid.image.domain.Image;
 import com.staticvoid.image.domain.ImageDto;
 import com.staticvoid.image.recognition.service.ImageRecognitionService;
@@ -61,8 +61,7 @@ public class SongSuggestionService {
             for (SongDto song : songs) {
                 song.setImageId(imageId);
                 Song songEntity = song.toEntity();
-                //TODO enable this once repos are set up properly
-//                songRepository.save(songEntity);
+                songRepository.save(songEntity);
                 addSpotifyPreview(songEntity);
                 songList.add(songEntity);
             }

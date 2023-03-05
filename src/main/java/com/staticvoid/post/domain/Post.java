@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.staticvoid.image.domain.Image;
 import com.staticvoid.post.comment.domain.Comment;
 import com.staticvoid.songsuggestion.domain.Song;
-import com.staticvoid.user.domain.User;
+import com.staticvoid.user.domain.ApplicationUser;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -31,7 +31,7 @@ public class Post {
     private Long id;
 
     @ManyToOne
-    private User user;
+    private ApplicationUser applicationUser;
 
     @OneToOne
     @JoinColumn(name = "id")

@@ -1,6 +1,6 @@
 spring:
   application:
-    name: dashx
+    name: SoundItOut
   datasource:
     platform: postgres
     driverClassName: org.postgresql.Driver

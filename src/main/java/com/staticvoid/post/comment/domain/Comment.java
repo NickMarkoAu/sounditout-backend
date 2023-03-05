@@ -1,13 +1,12 @@
 package com.staticvoid.post.comment.domain;
 
-import com.staticvoid.user.domain.User;
+import com.staticvoid.user.domain.ApplicationUser;
 import lombok.Data;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import java.io.Serializable;
 
 @Entity
@@ -18,7 +17,7 @@ public class Comment implements Serializable {
     private String id;
 
     @ManyToOne
-    private User user;
+    private ApplicationUser applicationUser;
 
     private String content;
 
