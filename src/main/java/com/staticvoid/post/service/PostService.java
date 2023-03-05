@@ -4,7 +4,7 @@ import com.staticvoid.post.domain.PostDto;
 import com.staticvoid.post.repository.PostRepository;
 import com.staticvoid.user.domain.ApplicationUser;
 import com.staticvoid.user.domain.ApplicationUserDto;
-import com.staticvoid.user.respository.UserRepository;
+import com.staticvoid.user.respository.ApplicationUserRepository;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -21,7 +21,7 @@ import java.util.stream.Collectors;
 public class PostService {
 
     private PostRepository postRepository;
-    private UserRepository userRepository;
+    private ApplicationUserRepository applicationUserRepository;
 
     /**
      * Gets the posts of the users that the requesting user follows. Ordered by date (newest first) and pageable
@@ -31,7 +31,7 @@ public class PostService {
      * @return
      */
     public Page<PostDto> getFeedPostsForUser(ApplicationUserDto user, Pageable pageable) {
-        List<ApplicationUser> following = userRepository.findById(user.getId()).orElseThrow().getFollowing();
+        List<ApplicationUser> following = applicationUserRepository.findById(user.getId()).orElseThrow().getFollowing();
         List<PostDto> posts = postRepository.findByUsers(following, pageable).stream().map(PostDto::toDto).collect(Collectors.toList());
         return new PageImpl<>(posts, pageable, posts.size());
     }
