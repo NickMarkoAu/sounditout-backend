@@ -1,12 +1,10 @@
 package com.staticvoid.user.service;
 
-import java.util.ArrayList;
-
 import com.staticvoid.user.domain.ApplicationUser;
 import com.staticvoid.user.domain.ApplicationUserDto;
 import com.staticvoid.user.respository.ApplicationUserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -19,16 +17,16 @@ public class ApplicationUserService implements UserDetailsService {
     private ApplicationUserRepository userRepository;
 
     @Autowired
+    @Lazy
     private PasswordEncoder bcryptEncoder;
 
     @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        ApplicationUser user = userRepository.findByUsername(username);
+    public ApplicationUser loadUserByUsername(String username) throws UsernameNotFoundException {
+        ApplicationUser user = userRepository.findByEmail(username);
         if (user == null) {
             throw new UsernameNotFoundException("User not found with email: " + username);
         }
-        return new org.springframework.security.core.userdetails.User(user.getEmail(), user.getPassword(),
-                new ArrayList<>());
+        return user;
     }
 
     public ApplicationUser save(ApplicationUserDto user) {

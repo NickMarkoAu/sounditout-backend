@@ -11,7 +11,7 @@ import java.util.Arrays;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class SongDto implements Serializable {
     private Long id;
-    private String imageId;
+    private Long imageId;
     private String userId;
     private String name;
     private String artist;

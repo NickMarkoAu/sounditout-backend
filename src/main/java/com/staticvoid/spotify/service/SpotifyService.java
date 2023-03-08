@@ -62,6 +62,7 @@ public class SpotifyService {
 
     public String getTrack(Song song) {
         try {
+            init();
             String query = song.getName() + " " + song.getArtist();
             SearchTracksRequest searchTracksRequest = spotifyApi.searchTracks(query)
                     .market(CountryCode.AU)

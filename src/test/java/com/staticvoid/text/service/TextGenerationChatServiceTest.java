@@ -10,13 +10,13 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @ExtendWith(SpringExtension.class)
 @Slf4j
-class TextGenerationServiceTest {
+class TextGenerationChatServiceTest {
 
-    private TextGenerationService service;
+    private TextGenerationChatService service;
 
     @BeforeEach
     void setup() {
-        service = new TextGenerationService();
+        service = new TextGenerationChatService();
     }
 
     @Test

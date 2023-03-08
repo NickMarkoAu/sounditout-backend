@@ -15,20 +15,22 @@ import java.util.Arrays;
 @NoArgsConstructor
 public class ImageDto implements Serializable {
 
-    private String id;
+    private Long id;
+    private String fileName;
     private String userId;
     private String s3uri;
     private String[] tags;
     private File file;
 
     public Image toEntity() {
-        return new Image(id, userId, s3uri, Arrays.toString(tags), file);
+        return new Image(id, fileName, userId, s3uri, Arrays.toString(tags), file);
     }
 
     public static ImageDto toDto(Image image) {
         ObjectMapper mapper = new ObjectMapper();
         ImageDto imageDto = new ImageDto();
         imageDto.setId(image.getId());
+        imageDto.setFileName(image.getFileName());
         imageDto.setUserId(image.getUserId());
         imageDto.setS3uri(image.getS3uri());
         try {

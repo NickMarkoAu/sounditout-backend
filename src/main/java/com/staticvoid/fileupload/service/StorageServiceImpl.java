@@ -54,7 +54,7 @@ public class StorageServiceImpl implements StorageService {
     private Image persist(String filename) {
         String s3Uri = s3.getResourceUrl(BUCKET_NAME, filename);
         Image image = new Image();
-        image.setId(filename);
+        image.setFileName(filename);
         image.setS3uri(s3Uri);
         return imageRepository.save(image);
     }

@@ -21,7 +21,7 @@ class SpotifyServiceTest {
     @Test
     void should_get_uri() {
         spotifyService.init();
-        Song song = new Song(1L, UUID.randomUUID().toString(), "New York, New York", "Frank Sinatra", "", null);
+        Song song = new Song(1L, 1L, "New York, New York", "Frank Sinatra", "", null);
         String url = spotifyService.getTrack(song);
 
         log.info("URL: {}", url);

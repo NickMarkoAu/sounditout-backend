@@ -2,8 +2,7 @@ package com.staticvoid.voicegeneration.api;
 
 import com.amazonaws.services.s3.AmazonS3Client;
 import com.amazonaws.services.s3.AmazonS3ClientBuilder;
-import com.staticvoid.fileupload.service.StorageService;
-import com.staticvoid.text.service.TextGenerationService;
+import com.staticvoid.text.service.TextGenerationChatService;
 import com.staticvoid.texttovoice.service.TextToVoiceService;
 import com.staticvoid.util.AwsCredentials;
 import com.staticvoid.voicetotext.service.VoiceToTextService;
@@ -21,7 +20,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class GenerateVoiceTest {
     private VoiceToTextService voiceToTextService;
-    private TextGenerationService textGenerationService;
+    private TextGenerationChatService textGenerationChatService;
     private TextToVoiceService textToVoiceService;
 
     private static final String REGION = "ap-southeast-2";
@@ -30,14 +29,14 @@ class GenerateVoiceTest {
     @BeforeEach
     void setup() {
         voiceToTextService = new VoiceToTextService();
-        textGenerationService = new TextGenerationService();
+        textGenerationChatService = new TextGenerationChatService();
         textToVoiceService = new TextToVoiceService();
     }
     @Test
     void should_return_prompt_in_voice() {
         String filePath = "s3://staticvoid-openai-testing/audio/generate-one-word-of-text.wav";
         String transcribedVoice = voiceToTextService.convertAudio(filePath);
-        String result = textGenerationService.generateFromPrompt(transcribedVoice);
+        String result = textGenerationChatService.generateFromPrompt(transcribedVoice);
         InputStream is = textToVoiceService.synthesize(result);
 
         assertEquals(1, result.split(" ").length);

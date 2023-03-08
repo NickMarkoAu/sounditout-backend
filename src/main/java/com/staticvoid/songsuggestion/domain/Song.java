@@ -6,6 +6,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
@@ -20,8 +22,9 @@ import java.io.Serializable;
 @Entity
 public class Song implements Serializable {
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    private String imageId;
+    private Long imageId;
     private String userId;
     private String name;
     private String artist;
@@ -30,7 +33,7 @@ public class Song implements Serializable {
     private String previewUrl;
     private String spotifyUrl;
 
-    public Song(Long id, String imageId, String name, String artist, String tags, String youtubeVideoId) {
+    public Song(Long id, Long imageId, String name, String artist, String tags, String youtubeVideoId) {
         this.id = id;
         this.imageId = imageId;
         this.name = name;
