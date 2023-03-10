@@ -5,6 +5,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -27,10 +28,10 @@ public class ApplicationUser implements Serializable, UserDetails {
     private Long tokens;
     private String password;
 
-    @OneToMany
+    @OneToMany(fetch = FetchType.EAGER)
     private List<ApplicationUser> followers;
 
-    @OneToMany
+    @OneToMany(fetch = FetchType.EAGER)
     private List<ApplicationUser> following;
 
     @Override
@@ -40,7 +41,7 @@ public class ApplicationUser implements Serializable, UserDetails {
 
     @Override
     public String getPassword() {
-        return "";
+        return password;
     }
 
     @Override

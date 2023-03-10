@@ -58,5 +58,7 @@ public class Post {
 
     private PostPrivacy privacy;
 
+    private boolean draft;
+
 }
 

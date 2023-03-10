@@ -2,12 +2,13 @@ package com.staticvoid.user.domain;
 
 import lombok.Data;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Data
-public class ApplicationUserDto {
+public class ApplicationUserDto implements Serializable {
     private String id;
 
     private String name;
