@@ -35,21 +35,21 @@ public class Post {
     private Long id;
 
     @ManyToOne
-    private ApplicationUser applicationUser;
+    private ApplicationUser user;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne
     @JoinColumn(name = "id")
     @NotFound(action = NotFoundAction.IGNORE)
     private Image image;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne
     @JoinColumn(name = "id")
     @NotFound(action = NotFoundAction.IGNORE)
     private Song song;
 
     private String content;
 
-    @OneToMany
+    @OneToMany(fetch = FetchType.EAGER)
     private List<Comment> comments;
 
     private Date date;
@@ -59,6 +59,8 @@ public class Post {
     private PostPrivacy privacy;
 
     private boolean draft;
+
+    private String tags;
 
 }
 

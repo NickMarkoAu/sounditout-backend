@@ -10,8 +10,10 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import java.io.Serializable;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -20,12 +22,14 @@ import java.util.List;
 public class ApplicationUser implements Serializable, UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private String id;
+    private Long id;
 
     private String name;
     private String email;
     private Date dateOfBirth;
-    private Long tokens;
+
+    @OneToOne
+    private ApplicationUserTokens tokens;
     private String password;
 
     @OneToMany(fetch = FetchType.EAGER)
@@ -36,7 +40,7 @@ public class ApplicationUser implements Serializable, UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return null;
+        return Collections.emptyList();
     }
 
     @Override

@@ -16,7 +16,6 @@ public class SongDto implements Serializable {
     private String name;
     private String artist;
     private String[] tags;
-    private String youtubeVideoId;
     private String previewUrl;
 
     public Song toEntity() {
@@ -27,7 +26,6 @@ public class SongDto implements Serializable {
         song.setName(name);
         song.setArtist(artist);
         song.setTags(Arrays.toString(tags));
-        song.setYoutubeVideoId(youtubeVideoId);
         song.setPreviewUrl(previewUrl);
         return song;
     }
@@ -45,7 +43,6 @@ public class SongDto implements Serializable {
         } catch(Exception e) {
             throw new RuntimeException("Could not deserialise tags");
         }
-        songDto.youtubeVideoId = song.getYoutubeVideoId();
         songDto.previewUrl = song.getPreviewUrl();
         return songDto;
     }

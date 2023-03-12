@@ -32,7 +32,10 @@ public class PostService {
      */
     public Page<PostDto> getFeedPostsForUser(ApplicationUserDto user, Pageable pageable) {
         List<ApplicationUser> following = applicationUserRepository.findById(user.getId()).orElseThrow().getFollowing();
-        List<PostDto> posts = postRepository.findByUsers(following, pageable).stream().map(PostDto::toDto).collect(Collectors.toList());
+        //include posts by own user
+        following.add(user.toEntityNotRecursive());
+        List<Long> userIds = following.stream().map(ApplicationUser::getId).collect(Collectors.toList());
+        List<PostDto> posts = postRepository.findByUsers(userIds, pageable).stream().map(PostDto::toDto).collect(Collectors.toList());
         return new PageImpl<>(posts, pageable, posts.size());
     }
 

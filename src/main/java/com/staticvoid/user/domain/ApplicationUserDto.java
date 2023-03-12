@@ -9,12 +9,12 @@ import java.util.stream.Collectors;
 
 @Data
 public class ApplicationUserDto implements Serializable {
-    private String id;
+    private Long id;
 
     private String name;
     private String email;
     private Date dateOfBirth;
-    private Long tokens;
+    private ApplicationUserTokensDto tokens;
     private List<ApplicationUserDto> followers;
     private List<ApplicationUserDto> following;
     private String password;
@@ -25,7 +25,7 @@ public class ApplicationUserDto implements Serializable {
         applicationUser.setName(name);
         applicationUser.setEmail(email);
         applicationUser.setDateOfBirth(dateOfBirth);
-        applicationUser.setTokens(tokens);
+        applicationUser.setTokens(tokens.toEntity());
         applicationUser.setFollowers(followers.stream().map(ApplicationUserDto::toEntityNotRecursive).collect(Collectors.toList()));
         applicationUser.setFollowing(following.stream().map(ApplicationUserDto::toEntityNotRecursive).collect(Collectors.toList()));
         return applicationUser;
@@ -37,7 +37,7 @@ public class ApplicationUserDto implements Serializable {
         dto.setName(entity.getName());
         dto.setEmail(entity.getEmail());
         dto.setDateOfBirth(entity.getDateOfBirth());
-        dto.setTokens(entity.getTokens());
+        dto.setTokens(ApplicationUserTokensDto.toDto(entity.getTokens()));
         dto.setFollowers(entity.getFollowers().stream().map(ApplicationUserDto::toDtoNotRecursive).collect(Collectors.toList()));
         dto.setFollowing(entity.getFollowing().stream().map(ApplicationUserDto::toDtoNotRecursive).collect(Collectors.toList()));
         return dto;
@@ -49,7 +49,7 @@ public class ApplicationUserDto implements Serializable {
         applicationUser.setName(name);
         applicationUser.setEmail(email);
         applicationUser.setDateOfBirth(dateOfBirth);
-        applicationUser.setTokens(tokens);
+        applicationUser.setTokens(tokens.toEntity());
         return applicationUser;
     }
 
@@ -59,7 +59,14 @@ public class ApplicationUserDto implements Serializable {
         dto.setName(entity.getName());
         dto.setEmail(entity.getEmail());
         dto.setDateOfBirth(entity.getDateOfBirth());
-        dto.setTokens(entity.getTokens());
+        dto.setTokens(ApplicationUserTokensDto.toDto(entity.getTokens()));
+        return dto;
+    }
+
+    public static ApplicationUserDto toDtoNotSensitiveNotRecursive(ApplicationUser entity) {
+        ApplicationUserDto dto = new ApplicationUserDto();
+        dto.setId(entity.getId());
+        dto.setName(entity.getName());
         return dto;
     }
 

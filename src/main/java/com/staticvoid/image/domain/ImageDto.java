@@ -2,11 +2,13 @@ package com.staticvoid.image.domain;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.staticvoid.util.ImageUtil;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.io.File;
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.Arrays;
 
@@ -18,12 +20,12 @@ public class ImageDto implements Serializable {
     private Long id;
     private String fileName;
     private String userId;
-    private String s3uri;
+    private byte[] imageContent;
     private String[] tags;
     private File file;
 
     public Image toEntity() {
-        return new Image(id, fileName, userId, s3uri, Arrays.toString(tags), file);
+        return new Image(id, fileName, userId, Arrays.toString(tags), file);
     }
 
     public static ImageDto toDto(Image image) {
@@ -32,7 +34,12 @@ public class ImageDto implements Serializable {
         imageDto.setId(image.getId());
         imageDto.setFileName(image.getFileName());
         imageDto.setUserId(image.getUserId());
-        imageDto.setS3uri(image.getS3uri());
+        //get from s3 and serve up base 64 byte array to display on front end
+        try {
+            imageDto.setImageContent(ImageUtil.getByteArrayFromImageS3Bucket(image.getS3uri()));
+        } catch(IOException e) {
+            throw new RuntimeException("Could not get image from S3", e);
+        }
         try {
             imageDto.setTags(mapper.readValue(image.getTags(), String[].class));
         } catch (JsonProcessingException e) {

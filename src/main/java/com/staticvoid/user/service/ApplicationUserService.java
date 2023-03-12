@@ -30,6 +30,7 @@ public class ApplicationUserService implements UserDetailsService {
     }
 
     public ApplicationUser save(ApplicationUserDto user) {
+        //TODO when storing a new user we need to create s3 directories for them
         ApplicationUser newUser = new ApplicationUser();
         newUser.setEmail(user.getEmail());
         newUser.setPassword(bcryptEncoder.encode(user.getPassword()));

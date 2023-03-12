@@ -17,6 +17,15 @@ import java.io.Serializable;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Image implements Serializable {
+
+    public Image(Long id, String fileName, String userId, String tags, File file) {
+        this.id = id;
+        this.fileName = fileName;
+        this.userId = userId;
+        this.tags = tags;
+        this.file = file;
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;

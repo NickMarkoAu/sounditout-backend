@@ -58,10 +58,7 @@ dependencies {
     implementation 'software.amazon.awssdk:iam'
     implementation 'software.amazon.awssdk:kinesis'
     implementation 'software.amazon.awssdk:s3'
-    implementation 'software.amazon.awssdk:transcribestreaming'
     implementation 'com.amazonaws:aws-java-sdk-s3'
-    implementation 'com.amazonaws:aws-java-sdk-transcribe:1.12.389'
-    implementation 'com.amazonaws:aws-java-sdk-polly'
     implementation 'com.amazonaws:aws-java-sdk-rekognition:1.12.389'
     implementation 'com.amazonaws:aws-java-sdk-cognitoidentity'
 
@@ -79,6 +76,8 @@ dependencies {
     implementation "org.hibernate:hibernate-entitymanager"
     implementation "org.hibernate:hibernate-envers"
     implementation "org.hibernate.validator:hibernate-validator"
+
+    implementation 'io.github.jav:expo-server-sdk:1.1.0'
 
     testImplementation 'junit:junit:4.5'
 }

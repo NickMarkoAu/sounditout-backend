@@ -6,10 +6,10 @@ import com.staticvoid.user.domain.ApplicationUserDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
-
-import javax.websocket.server.PathParam;
 
 @RestController
 @RequiredArgsConstructor
@@ -17,8 +17,13 @@ public class PostController {
 
     private final PostService postService;
 
-    @GetMapping("/api/posts/feed/{user}")
-    public Page<PostDto> getFeedPostsForUser(@PathParam("user") ApplicationUserDto user, Pageable pageable) {
-        return postService.getFeedPostsForUser(user, pageable);
+    @PostMapping("/api/posts/feed")
+    public ResponseEntity<?> getFeedPostsForUser(@RequestBody ApplicationUserDto user, Pageable pageable) {
+        try {
+            Page<PostDto> posts = postService.getFeedPostsForUser(user, pageable);
+            return ResponseEntity.ok(posts);
+        } catch(Exception e) {
+            return ResponseEntity.internalServerError().body(e.getMessage());
+        }
     }
 }

@@ -195,4 +195,106 @@ class SongSuggestionServiceTest {
         }
     }
 
+    @Test
+    void should_return_song_suggestions_from_image_() {
+        URL dir_url = ClassLoader.getSystemResource("img/test-images/test-image.jpg");
+        try {
+            File file = new File(dir_url.toURI());
+            Image image = new Image();
+            image.setFile(file);
+            Song[] songs = songSuggestionService.songSuggestions(image);
+
+            log.info("Songs: {}", Arrays.toString(songs));
+
+            assertEquals(songs.length, 5);
+        } catch (URISyntaxException e) {
+            throw new RuntimeException("Could not convert image to suggestions");
+        }
+    }
+
+    @Test
+    void should_return_song_suggestions_from_image2_() {
+        URL dir_url = ClassLoader.getSystemResource("img/test-images/test-image2.jpg");
+        try {
+            File file = new File(dir_url.toURI());
+            Image image = new Image();
+            image.setFile(file);
+            Song[] songs = songSuggestionService.songSuggestions(image);
+
+            log.info("Songs: {}", Arrays.toString(songs));
+
+            assertEquals(songs.length, 5);
+        } catch (URISyntaxException e) {
+            throw new RuntimeException("Could not convert image to suggestions");
+        }
+    }
+
+    @Test
+    void should_return_song_suggestions_from_image3_() {
+        URL dir_url = ClassLoader.getSystemResource("img/test-images/test-image3.jpg");
+        try {
+            File file = new File(dir_url.toURI());
+            Image image = new Image();
+            image.setFile(file);
+            Song[] songs = songSuggestionService.songSuggestions(image);
+
+            log.info("Songs: {}", Arrays.toString(songs));
+
+            assertEquals(songs.length, 5);
+        } catch (URISyntaxException e) {
+            throw new RuntimeException("Could not convert image to suggestions");
+        }
+    }
+
+    @Test
+    void should_return_song_suggestions_from_image4_() {
+        URL dir_url = ClassLoader.getSystemResource("img/test-images/test-image4.jpg");
+        try {
+            File file = new File(dir_url.toURI());
+            Image image = new Image();
+            image.setFile(file);
+            Song[] songs = songSuggestionService.songSuggestions(image);
+
+            log.info("Songs: {}", Arrays.toString(songs));
+
+            assertEquals(songs.length, 5);
+        } catch (URISyntaxException e) {
+            throw new RuntimeException("Could not convert image to suggestions");
+        }
+    }
+
+    @Test
+    void should_return_song_suggestions_from_image5_() {
+        URL dir_url = ClassLoader.getSystemResource("img/test-images/test-image5.jpg");
+        try {
+            File file = new File(dir_url.toURI());
+            Image image = new Image();
+            image.setFile(file);
+            Song[] songs = songSuggestionService.songSuggestions(image);
+
+            log.info("Songs: {}", Arrays.toString(songs));
+
+            assertEquals(songs.length, 5);
+        } catch (URISyntaxException e) {
+            throw new RuntimeException("Could not convert image to suggestions");
+        }
+    }
+
+    @Test
+    void should_return_song_suggestions_from_image6_() {
+        URL dir_url = ClassLoader.getSystemResource("img/test-images/test-image6.jpg");
+        try {
+            File file = new File(dir_url.toURI());
+            Image image = new Image();
+            image.setFile(file);
+            Song[] songs = songSuggestionService.songSuggestions(image);
+
+            log.info("Songs: {}", Arrays.toString(songs));
+
+            assertEquals(songs.length, 5);
+        } catch (URISyntaxException e) {
+            throw new RuntimeException("Could not convert image to suggestions");
+        }
+    }
+
 }

@@ -6,8 +6,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.util.UUID;
-
 @Slf4j
 class SpotifyServiceTest {
 
@@ -21,7 +19,7 @@ class SpotifyServiceTest {
     @Test
     void should_get_uri() {
         spotifyService.init();
-        Song song = new Song(1L, 1L, "New York, New York", "Frank Sinatra", "", null);
+        Song song = new Song(1L, 1L, "New York, New York", "Frank Sinatra", "");
         String url = spotifyService.getTrack(song);
 
         log.info("URL: {}", url);
