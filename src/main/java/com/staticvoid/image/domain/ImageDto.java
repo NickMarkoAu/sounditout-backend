@@ -19,7 +19,7 @@ public class ImageDto implements Serializable {
 
     private Long id;
     private String fileName;
-    private String userId;
+    private Long userId;
     private byte[] imageContent;
     private String[] tags;
     private File file;

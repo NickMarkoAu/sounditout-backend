@@ -5,10 +5,12 @@ import com.amazonaws.services.rekognition.model.DetectLabelsRequest;
 import com.amazonaws.services.rekognition.model.Image;
 import com.amazonaws.services.rekognition.model.DetectLabelsResult;
 import com.amazonaws.services.rekognition.model.Label;
+import com.staticvoid.fileupload.service.S3StorageService;
 import com.staticvoid.image.repository.ImageRepository;
 import com.staticvoid.util.AwsCredentials;
 import com.staticvoid.util.AwsUtil;
 import lombok.extern.slf4j.Slf4j;
+import net.minidev.json.JSONArray;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import software.amazon.awssdk.core.SdkBytes;
@@ -28,6 +30,7 @@ public class ImageRecognitionService {
     @Autowired
     private ImageRepository imageRepository;
     private static final Integer MAX_LABELS = 15;
+    private static final S3StorageService s3StorageService = new S3StorageService();
 
     public ImageRecognitionService() {
         this.rekClient = (AmazonRekognitionClient) AmazonRekognitionClientBuilder.standard()
@@ -37,10 +40,14 @@ public class ImageRecognitionService {
     }
 
     public List<String> detectImageLabels(com.staticvoid.image.domain.Image image) {
-        List<String> tags = detectImageLabels(image.getFile());
-        image.setTags(tags.toString());
-        imageRepository.save(image);
-        return tags;
+        try {
+            List<String> tags = detectImageLabels(s3StorageService.getFileFromS3Key(image.getS3uri()));
+            image.setTags(JSONArray.toJSONString(tags));
+            imageRepository.save(image);
+            return tags;
+        } catch (Exception e) {
+            throw new RuntimeException("Could not detect image labels: ", e);
+        }
     }
 
     public List<String> detectImageLabels(File sourceImage) {

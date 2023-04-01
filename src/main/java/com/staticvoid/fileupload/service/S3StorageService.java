@@ -3,13 +3,21 @@ package com.staticvoid.fileupload.service;
 import com.amazonaws.ClientConfiguration;
 import com.amazonaws.services.s3.AmazonS3Client;
 import com.amazonaws.services.s3.AmazonS3ClientBuilder;
+import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.amazonaws.services.s3.model.S3Object;
 import com.staticvoid.image.domain.Image;
+import com.staticvoid.user.domain.ApplicationUser;
 import com.staticvoid.util.AwsCredentials;
 import com.staticvoid.util.AwsUtil;
+import org.apache.commons.io.FilenameUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.StandardCopyOption;
 import java.util.UUID;
 
 import static com.staticvoid.util.AwsUtil.BUCKET_NAME;
@@ -21,13 +29,16 @@ public class S3StorageService {
             .withClientConfiguration(new ClientConfiguration())
             .withCredentials(AwsCredentials.defaultCredentials()).build();
 
-    public Image store(MultipartFile file) {
+    public Image store(MultipartFile file, ApplicationUser user) {
         try {
-            String filename = UUID.randomUUID().toString();
-            File convFile = new File(System.getProperty("java.io.tmpdir") + "/" + filename);
+            String s3Key = getS3Key(user, FilenameUtils.getExtension(file.getOriginalFilename()));
+            File convFile = new File(System.getProperty("java.io.tmpdir") + "/" + s3Key);
+            convFile.mkdirs();
             file.transferTo(convFile);
-            s3.putObject(BUCKET_NAME, filename, new File(convFile.getName()));
-            return fileNameToImage(filename);
+            InputStream is = new FileInputStream(convFile);
+            s3.putObject(BUCKET_NAME, s3Key, is, new ObjectMetadata());
+            convFile.delete();
+            return s3KeyAndUserToImage(s3Key, user);
         } catch (Exception e) {
             throw new RuntimeException("Could not upload file", e);
         }
@@ -38,6 +49,14 @@ public class S3StorageService {
         Image image = new Image();
         image.setFileName(filename);
         image.setS3uri(s3Uri);
+        return image;
+    }
+
+    private Image s3KeyAndUserToImage(String s3Key, ApplicationUser user) {
+        Image image = new Image();
+        image.setFileName(s3Key);
+        image.setS3uri(s3Key);
+        image.setUserId(user.getId());
         return image;
     }
 
@@ -55,10 +74,16 @@ public class S3StorageService {
         }
     }
 
-    private String getS3Key() {
-        String s3Key = "";
+    public File getFileFromS3Key(String s3Key) throws IOException {
+        InputStream is = s3.getObject(BUCKET_NAME, s3Key).getObjectContent();
+        File file = new File(System.getProperty("java.io.tmpdir") + "/" + s3Key);
+        Files.copy(is, file.toPath(), StandardCopyOption.REPLACE_EXISTING);
+        return file;
+    }
 
-        return s3Key;
+    private String getS3Key(ApplicationUser user, String fileExtension) {
+        String filename = UUID.randomUUID().toString();
+        return user.getId() + "/images/" + filename + "." + fileExtension;
     }
 
 }

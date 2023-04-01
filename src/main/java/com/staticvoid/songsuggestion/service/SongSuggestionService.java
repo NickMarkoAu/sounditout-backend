@@ -1,6 +1,7 @@
 package com.staticvoid.songsuggestion.service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.staticvoid.songsuggestion.domain.GenerateResultDto;
 import com.staticvoid.spotify.service.SpotifyService;
 import com.staticvoid.image.domain.Image;
 import com.staticvoid.image.domain.ImageDto;
@@ -62,7 +63,7 @@ public class SongSuggestionService {
                 song.setImageId(imageId);
                 Song songEntity = song.toEntity();
                 songRepository.save(songEntity);
-                addSpotifyPreview(songEntity);
+//                addSpotifyPreview(songEntity);
                 songList.add(songEntity);
             }
 
@@ -79,6 +80,13 @@ public class SongSuggestionService {
     public final Song[] songSuggestions(Image image) {
         List<String> tags = imageRecognitionService.detectImageLabels(image);
         return songSuggestions(tags, image.getId(), false);
+    }
+
+    public final GenerateResultDto songSuggestionResult(Image image) {
+        List<String> tags = imageRecognitionService.detectImageLabels(image);
+        Song[] songs = songSuggestions(tags, image.getId(), false);
+        SongDto[] songDtos = Arrays.stream(songs).map(SongDto::toDto).toArray(SongDto[]::new);
+        return new GenerateResultDto(songDtos, tags.toArray(new String[0]));
     }
 
     public final Song[] songSuggestionsWithGenres(Image image, List<String> genres) {

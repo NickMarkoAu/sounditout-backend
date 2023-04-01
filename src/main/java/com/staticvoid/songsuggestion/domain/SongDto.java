@@ -3,9 +3,11 @@ package com.staticvoid.songsuggestion.domain;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.Data;
+import net.minidev.json.JSONArray;
 
 import java.io.Serializable;
 import java.util.Arrays;
+import java.util.List;
 
 @Data
 @JsonIgnoreProperties(ignoreUnknown = true)
@@ -15,7 +17,7 @@ public class SongDto implements Serializable {
     private String userId;
     private String name;
     private String artist;
-    private String[] tags;
+    private List<String> tags;
     private String previewUrl;
 
     public Song toEntity() {
@@ -25,7 +27,7 @@ public class SongDto implements Serializable {
         song.setUserId(userId);
         song.setName(name);
         song.setArtist(artist);
-        song.setTags(Arrays.toString(tags));
+        song.setTags(JSONArray.toJSONString(tags));
         song.setPreviewUrl(previewUrl);
         return song;
     }
@@ -39,7 +41,7 @@ public class SongDto implements Serializable {
         songDto.name = song.getName();
         songDto.artist = song.getArtist();
         try {
-            songDto.tags = mapper.readValue(song.getTags(), String[].class);
+            songDto.tags = mapper.readValue(song.getTags(), List.class);
         } catch(Exception e) {
             throw new RuntimeException("Could not deserialise tags");
         }

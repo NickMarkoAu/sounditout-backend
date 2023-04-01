@@ -18,7 +18,7 @@ import java.io.Serializable;
 @AllArgsConstructor
 public class Image implements Serializable {
 
-    public Image(Long id, String fileName, String userId, String tags, File file) {
+    public Image(Long id, String fileName, Long userId, String tags, File file) {
         this.id = id;
         this.fileName = fileName;
         this.userId = userId;
@@ -30,7 +30,7 @@ public class Image implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String fileName;
-    private String userId;
+    private Long userId;
     private String s3uri;
     private String tags;
 

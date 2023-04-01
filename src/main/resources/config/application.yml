@@ -41,3 +41,7 @@ spring:
           cognito:
             issuerUri: https://cognito-idp.ap-southeast-2.amazonaws.com/ap-southeast-2_kafumYAea
             user-name-attribute: cognito:username
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 10MB
