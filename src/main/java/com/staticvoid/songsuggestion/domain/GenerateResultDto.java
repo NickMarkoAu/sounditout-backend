@@ -1,5 +1,6 @@
 package com.staticvoid.songsuggestion.domain;
 
+import com.staticvoid.image.domain.ImageDto;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -9,10 +10,12 @@ public class GenerateResultDto implements Serializable {
     private final SongDto[] songs;
     private final String[] tags;
     private final String error;
+    private final ImageDto image;
 
-    public GenerateResultDto(SongDto[] songs, String[] tags) {
+    public GenerateResultDto(SongDto[] songs, String[] tags, ImageDto image) {
         this.songs = songs;
         this.tags = tags;
+        this.image = image;
         this.error = null;
     }
 
@@ -20,5 +23,6 @@ public class GenerateResultDto implements Serializable {
         this.error = error;
         this.songs = new SongDto[0];
         this.tags = new String[0];
+        this.image = new ImageDto();
     }
 }

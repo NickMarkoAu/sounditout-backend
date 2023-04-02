@@ -7,6 +7,7 @@ import com.staticvoid.post.comment.domain.CommentDto;
 import com.staticvoid.songsuggestion.domain.SongDto;
 import com.staticvoid.user.domain.ApplicationUserDto;
 import lombok.Data;
+import net.minidev.json.JSONArray;
 
 import java.io.Serializable;
 import java.text.ParseException;
@@ -39,9 +40,13 @@ public class PostDto implements Serializable {
         dto.setImage(ImageDto.toDto(entity.getImage()));
         dto.setSong(SongDto.toDto(entity.getSong()));
         dto.setContent(entity.getContent());
-        dto.setComments(CommentDto.toDto(entity.getComments()));
+        if(entity.getComments() != null) {
+            dto.setComments(CommentDto.toDto(entity.getComments()));
+        }
         dto.setDate(sdf.format(entity.getDate()));
-        dto.setLikes(entity.getLikes());
+        if(entity.getLikes() != null) {
+            dto.setLikes(entity.getLikes());
+        }
         dto.setPrivacy(entity.getPrivacy());
         dto.setUser(ApplicationUserDto.toDtoNotSensitiveNotRecursive(entity.getUser()));
         try {
@@ -63,6 +68,19 @@ public class PostDto implements Serializable {
         post.setLikes(likes);
         post.setPrivacy(privacy);
         post.setTags(Arrays.toString(tags));
+        post.setUser(user.toEntityNotRecursive());
+        return post;
+    }
+
+    public Post toNewPostEntity() {
+        Post post = new Post();
+        post.setId(id);
+        post.setImage(image.toEntity());
+        post.setTags(JSONArray.toJSONString(Arrays.asList(image.getTags())));
+        post.setSong(song.toEntity());
+        post.setContent(content);
+        post.setDate(new Date());
+        post.setPrivacy(privacy);
         post.setUser(user.toEntityNotRecursive());
         return post;
     }

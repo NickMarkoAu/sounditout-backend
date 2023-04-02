@@ -86,7 +86,7 @@ public class SongSuggestionService {
         List<String> tags = imageRecognitionService.detectImageLabels(image);
         Song[] songs = songSuggestions(tags, image.getId(), false);
         SongDto[] songDtos = Arrays.stream(songs).map(SongDto::toDto).toArray(SongDto[]::new);
-        return new GenerateResultDto(songDtos, tags.toArray(new String[0]));
+        return new GenerateResultDto(songDtos, tags.toArray(new String[0]), ImageDto.toDto(image));
     }
 
     public final Song[] songSuggestionsWithGenres(Image image, List<String> genres) {

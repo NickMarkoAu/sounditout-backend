@@ -39,6 +39,10 @@ public class PostService {
         return new PageImpl<>(posts, pageable, posts.size());
     }
 
+    public PostDto createPost(PostDto post) {
+        return PostDto.toDto(postRepository.save(post.toNewPostEntity()));
+    }
+
 
 
 }

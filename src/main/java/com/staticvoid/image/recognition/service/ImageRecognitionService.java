@@ -22,6 +22,7 @@ import java.io.InputStream;
 import java.nio.ByteBuffer;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @Slf4j
@@ -41,7 +42,10 @@ public class ImageRecognitionService {
 
     public List<String> detectImageLabels(com.staticvoid.image.domain.Image image) {
         try {
+            //TODO file is already on s3 at this point to it should be faster to use the s3 key and pass that to rekognition rather than get the image and use the file
             List<String> tags = detectImageLabels(s3StorageService.getFileFromS3Key(image.getS3uri()));
+            //make tags lowercase and replace spaces with dashes
+            tags = tags.stream().map(tag -> tag.toLowerCase().replace(" ", "-")).collect(Collectors.toList());
             image.setTags(JSONArray.toJSONString(tags));
             imageRepository.save(image);
             return tags;

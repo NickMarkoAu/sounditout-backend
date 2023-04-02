@@ -6,7 +6,6 @@ import lombok.Data;
 import net.minidev.json.JSONArray;
 
 import java.io.Serializable;
-import java.util.Arrays;
 import java.util.List;
 
 @Data

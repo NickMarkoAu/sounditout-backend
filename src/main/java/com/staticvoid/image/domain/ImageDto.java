@@ -6,6 +6,7 @@ import com.staticvoid.util.ImageUtil;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import net.minidev.json.JSONArray;
 
 import java.io.File;
 import java.io.IOException;
@@ -25,7 +26,7 @@ public class ImageDto implements Serializable {
     private File file;
 
     public Image toEntity() {
-        return new Image(id, fileName, userId, Arrays.toString(tags), file);
+        return new Image(id, fileName, userId, JSONArray.toJSONString(Arrays.asList(tags)), file);
     }
 
     public static ImageDto toDto(Image image) {

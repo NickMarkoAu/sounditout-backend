@@ -21,6 +21,7 @@ public class Image implements Serializable {
     public Image(Long id, String fileName, Long userId, String tags, File file) {
         this.id = id;
         this.fileName = fileName;
+        this.s3uri = fileName;
         this.userId = userId;
         this.tags = tags;
         this.file = file;

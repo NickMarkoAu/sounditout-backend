@@ -38,12 +38,12 @@ public class Post {
     private ApplicationUser user;
 
     @OneToOne
-    @JoinColumn(name = "id")
+    @JoinColumn(name = "image_id")
     @NotFound(action = NotFoundAction.IGNORE)
     private Image image;
 
     @OneToOne
-    @JoinColumn(name = "id")
+    @JoinColumn(name = "song_id")
     @NotFound(action = NotFoundAction.IGNORE)
     private Song song;
 
