@@ -1,7 +1,8 @@
-package com.staticvoid.songsuggestion.domain;
+package com.staticvoid.songsuggestion.domain.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.staticvoid.songsuggestion.domain.Song;
 import lombok.Data;
 import net.minidev.json.JSONArray;
 
@@ -17,7 +18,6 @@ public class SongDto implements Serializable {
     private String name;
     private String artist;
     private List<String> tags;
-    private String previewUrl;
 
     public Song toEntity() {
         Song song = new Song();
@@ -27,7 +27,6 @@ public class SongDto implements Serializable {
         song.setName(name);
         song.setArtist(artist);
         song.setTags(JSONArray.toJSONString(tags));
-        song.setPreviewUrl(previewUrl);
         return song;
     }
 
@@ -44,7 +43,6 @@ public class SongDto implements Serializable {
         } catch(Exception e) {
             throw new RuntimeException("Could not deserialise tags");
         }
-        songDto.previewUrl = song.getPreviewUrl();
         return songDto;
     }
 }

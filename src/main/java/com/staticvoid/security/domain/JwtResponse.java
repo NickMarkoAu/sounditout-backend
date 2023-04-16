@@ -1,6 +1,6 @@
 package com.staticvoid.security.domain;
 
-import com.staticvoid.user.domain.ApplicationUserDto;
+import com.staticvoid.user.domain.dto.ApplicationUserDto;
 import lombok.Getter;
 import lombok.Setter;
 

@@ -1,13 +1,15 @@
 package com.staticvoid.songsuggestion.service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.staticvoid.songsuggestion.domain.GenerateResultDto;
+import com.staticvoid.songsuggestion.domain.SongMetadata;
+import com.staticvoid.songsuggestion.domain.dto.GenerateResultDto;
+import com.staticvoid.songsuggestion.repository.SongMetadataRepository;
 import com.staticvoid.spotify.service.SpotifyService;
 import com.staticvoid.image.domain.Image;
-import com.staticvoid.image.domain.ImageDto;
+import com.staticvoid.image.domain.dto.ImageDto;
 import com.staticvoid.image.recognition.service.ImageRecognitionService;
 import com.staticvoid.songsuggestion.domain.Song;
-import com.staticvoid.songsuggestion.domain.SongDto;
+import com.staticvoid.songsuggestion.domain.dto.SongDto;
 import com.staticvoid.songsuggestion.repository.SongRepository;
 import com.staticvoid.text.service.TextGenerationChatService;
 import lombok.AllArgsConstructor;
@@ -26,6 +28,7 @@ public class SongSuggestionService {
     private final TextGenerationChatService textGenerationChatService;
     private final ImageRecognitionService imageRecognitionService;
     private final SongRepository songRepository;
+    private final SongMetadataRepository songMetadataRepository;
     private final SpotifyService spotifyService;
 
     public final Song[] songSuggestions(List<String> tags, Long imageId, Boolean refresh) {
@@ -63,7 +66,6 @@ public class SongSuggestionService {
                 song.setImageId(imageId);
                 Song songEntity = song.toEntity();
                 songRepository.save(songEntity);
-//                addSpotifyPreview(songEntity);
                 songList.add(songEntity);
             }
 
@@ -71,10 +73,6 @@ public class SongSuggestionService {
         } catch (Exception e) {
             throw new RuntimeException("Could not return suggestions", e);
         }
-    }
-
-    private void addSpotifyPreview(Song song) {
-        song.setPreviewUrl(spotifyService.getTrack(song));
     }
 
     public final Song[] songSuggestions(Image image) {
@@ -103,5 +101,9 @@ public class SongSuggestionService {
         return Arrays.stream(song).map(Song::toPromptString).collect(Collectors.toList()).toString();
     }
 
-
+    public SongMetadata getSongMetadata(Long songId) {
+        Song song = songRepository.findById(songId).orElseThrow(() -> new RuntimeException("Song not found"));
+        //Try to find song metadata in database, if not found get from Spotify
+        return songMetadataRepository.findById(songId).orElse(spotifyService.getSongMetadata(song));
+    }
 }

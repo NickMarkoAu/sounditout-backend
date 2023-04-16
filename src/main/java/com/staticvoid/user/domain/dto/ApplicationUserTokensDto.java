@@ -1,5 +1,6 @@
-package com.staticvoid.user.domain;
+package com.staticvoid.user.domain.dto;
 
+import com.staticvoid.user.domain.ApplicationUserTokens;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -19,8 +20,8 @@ public class ApplicationUserTokensDto implements Serializable {
 
     public ApplicationUserTokens toEntity() {
         ApplicationUserTokens entity = new ApplicationUserTokens();
-        entity.setTokens(this.getTokens());
-        entity.setFreeTokens(this.getFreeTokens());
+        entity.setTokens(tokens);
+        entity.setFreeTokens(freeTokens);
         return entity;
     }
 }

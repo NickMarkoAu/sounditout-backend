@@ -10,10 +10,12 @@ import com.staticvoid.user.domain.ApplicationUser;
 import com.staticvoid.util.AwsCredentials;
 import com.staticvoid.util.AwsUtil;
 import org.apache.commons.io.FilenameUtils;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
@@ -35,13 +37,17 @@ public class S3StorageService {
             File convFile = new File(System.getProperty("java.io.tmpdir") + "/" + s3Key);
             convFile.mkdirs();
             file.transferTo(convFile);
-            InputStream is = new FileInputStream(convFile);
-            s3.putObject(BUCKET_NAME, s3Key, is, new ObjectMetadata());
-            convFile.delete();
-            return s3KeyAndUserToImage(s3Key, user);
+            return putImage(user, s3Key, convFile);
         } catch (Exception e) {
             throw new RuntimeException("Could not upload file", e);
         }
+    }
+
+    public Image putImage(ApplicationUser user, String s3Key, File convFile) throws FileNotFoundException {
+        InputStream is = new FileInputStream(convFile);
+        s3.putObject(BUCKET_NAME, s3Key, is, new ObjectMetadata());
+        convFile.delete();
+        return s3KeyAndUserToImage(s3Key, user);
     }
 
     private Image fileNameToImage(String filename) {

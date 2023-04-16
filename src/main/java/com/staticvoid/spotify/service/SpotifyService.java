@@ -2,6 +2,8 @@ package com.staticvoid.spotify.service;
 
 import com.neovisionaries.i18n.CountryCode;
 import com.staticvoid.songsuggestion.domain.Song;
+import com.staticvoid.songsuggestion.domain.SongMetadata;
+import com.staticvoid.songsuggestion.repository.SongMetadataRepository;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.hc.core5.http.ParseException;
@@ -34,6 +36,7 @@ public class SpotifyService {
             .build();
     private static final ClientCredentialsRequest clientCredentialsRequest = spotifyApi.clientCredentials()
             .build();
+    private final SongMetadataRepository songMetadataRepository;
 
     public void init() {
         clientCredentials();
@@ -46,21 +49,13 @@ public class SpotifyService {
             // Set access token for further "spotifyApi" object usage
             spotifyApi.setAccessToken(clientCredentials.getAccessToken());
 
-            System.out.println("Expires in: " + clientCredentials.getExpiresIn());
+            log.info("Expires in: " + clientCredentials.getExpiresIn());
         } catch (IOException | SpotifyWebApiException | ParseException e) {
-            System.out.println("Error: " + e.getMessage());
+            log.error("Error: " + e.getMessage());
         }
     }
 
-    public List<String> getTracks(Song[] songs) {
-        List<String> result = new ArrayList<>();
-        for (Song song : songs) {
-            result.add(getTrack(song));
-        }
-        return result;
-    }
-
-    public String getTrack(Song song) {
+    public SongMetadata getSongMetadata(Song song) {
         try {
             init();
             String query = song.getName() + " " + song.getArtist();
@@ -75,11 +70,10 @@ public class SpotifyService {
             Track track = Objects.requireNonNull(Arrays.stream(trackPaging.getItems()).filter(t -> t.getPreviewUrl() != null).findFirst().orElse(null));
             String previewUrl = track.getPreviewUrl();
             String spotifyUrl = track.getExternalUrls().getExternalUrls().get("spotify");
-            song.setPreviewUrl(previewUrl);
-            song.setSpotifyUrl(spotifyUrl);
-            return previewUrl;
+            String albumArtUrl = track.getAlbum().getImages()[0].getUrl();
+            return songMetadataRepository.save(new SongMetadata(song, spotifyUrl, previewUrl, albumArtUrl));
         } catch (IOException | SpotifyWebApiException | ParseException e) {
-            throw new RuntimeException("Could not get track listings", e);
+            throw new RuntimeException("Could not get metadata", e);
         }
     }
 

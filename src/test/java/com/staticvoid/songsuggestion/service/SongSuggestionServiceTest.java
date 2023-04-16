@@ -1,7 +1,9 @@
 package com.staticvoid.songsuggestion.service;
 
+import com.staticvoid.fileupload.service.S3StorageService;
 import com.staticvoid.image.domain.Image;
 import com.staticvoid.songsuggestion.domain.Song;
+import com.staticvoid.user.domain.ApplicationUser;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
@@ -11,6 +13,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.Arrays;
@@ -25,6 +28,8 @@ class SongSuggestionServiceTest {
 
     @Autowired
     private SongSuggestionService songSuggestionService;
+
+    private final S3StorageService storageService = new S3StorageService();
 
     @Test
     void should_return_song_suggestions_from_tags() {
@@ -42,14 +47,16 @@ class SongSuggestionServiceTest {
         URL dir_url = ClassLoader.getSystemResource("img/test-image.jpg");
         try {
             File file = new File(dir_url.toURI());
-            Image image = new Image();
-            image.setFile(file);
+            ApplicationUser user = new ApplicationUser();
+            user.setId(12345L);
+            Image image = storageService.putImage(user, "test-image.jpg", file);
+
             Song[] songs = songSuggestionService.songSuggestions(image);
 
             log.info("Songs: {}", Arrays.toString(songs));
 
             assertEquals(songs.length, 5);
-        } catch (URISyntaxException e) {
+        } catch (URISyntaxException | FileNotFoundException e) {
             throw new RuntimeException("Could not convert image to suggestions");
         }
     }
@@ -59,14 +66,15 @@ class SongSuggestionServiceTest {
         URL dir_url = ClassLoader.getSystemResource("img/test-image2.jpg");
         try {
             File file = new File(dir_url.toURI());
-            Image image = new Image();
-            image.setFile(file);
+            ApplicationUser user = new ApplicationUser();
+            user.setId(12345L);
+            Image image = storageService.putImage(user, "test-image2.jpg", file);
             Song[] songs = songSuggestionService.songSuggestions(image);
 
             log.info("Songs: {}", Arrays.toString(songs));
 
             assertEquals(songs.length, 5);
-        } catch (URISyntaxException e) {
+        } catch (URISyntaxException | FileNotFoundException e) {
             throw new RuntimeException("Could not convert image to suggestions");
         }
     }
@@ -107,19 +115,20 @@ class SongSuggestionServiceTest {
     }
 
     @Test
-    @Disabled
     void should_return_song_suggestions_from_image5() {
         URL dir_url = ClassLoader.getSystemResource("img/test-image5.jpg");
         try {
             File file = new File(dir_url.toURI());
-            Image image = new Image();
-            image.setFile(file);
+            ApplicationUser user = new ApplicationUser();
+            user.setId(12345L);
+            Image image = storageService.putImage(user, "test-image5.jpg", file);
+
             Song[] songs = songSuggestionService.songSuggestions(image);
 
             log.info("Songs: {}", Arrays.toString(songs));
 
             assertEquals(songs.length, 5);
-        } catch (URISyntaxException e) {
+        } catch (URISyntaxException | FileNotFoundException e) {
             throw new RuntimeException("Could not convert image to suggestions");
         }
     }

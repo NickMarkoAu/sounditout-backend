@@ -25,8 +25,6 @@ public class Song implements Serializable {
     private String name;
     private String artist;
     private String tags;
-    private String previewUrl;
-    private String spotifyUrl;
 
     public Song(Long id, Long imageId, String name, String artist, String tags) {
         this.id = id;

@@ -4,7 +4,7 @@ import com.staticvoid.security.domain.JwtRequest;
 import com.staticvoid.security.domain.JwtResponse;
 import com.staticvoid.security.jwt.JwtTokenUtil;
 import com.staticvoid.user.domain.ApplicationUser;
-import com.staticvoid.user.domain.ApplicationUserDto;
+import com.staticvoid.user.domain.dto.ApplicationUserDto;
 import com.staticvoid.user.service.ApplicationUserService;
 import io.jsonwebtoken.impl.DefaultClaims;
 import org.springframework.beans.factory.annotation.Autowired;

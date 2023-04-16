@@ -1,11 +1,13 @@
-package com.staticvoid.post.domain;
+package com.staticvoid.post.domain.dto;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.staticvoid.image.domain.ImageDto;
-import com.staticvoid.post.comment.domain.CommentDto;
-import com.staticvoid.songsuggestion.domain.SongDto;
-import com.staticvoid.user.domain.ApplicationUserDto;
+import com.staticvoid.image.domain.dto.ImageDto;
+import com.staticvoid.post.comment.domain.dto.CommentDto;
+import com.staticvoid.post.domain.Post;
+import com.staticvoid.post.domain.PostPrivacy;
+import com.staticvoid.songsuggestion.domain.dto.SongDto;
+import com.staticvoid.user.domain.dto.ApplicationUserDto;
 import lombok.Data;
 import net.minidev.json.JSONArray;
 
@@ -33,16 +35,35 @@ public class PostDto implements Serializable {
 
     private static final SimpleDateFormat sdf = new SimpleDateFormat("dd MMM yyyy");
 
-    public static PostDto toDto(Post entity) {
+    public static PostDto toDto(Post entity, List<CommentDto> comments) {
         ObjectMapper mapper = new ObjectMapper();
         PostDto dto = new PostDto();
         dto.setId(entity.getId());
         dto.setImage(ImageDto.toDto(entity.getImage()));
         dto.setSong(SongDto.toDto(entity.getSong()));
         dto.setContent(entity.getContent());
-        if(entity.getComments() != null) {
-            dto.setComments(CommentDto.toDto(entity.getComments()));
+        dto.setComments(comments);
+        dto.setDate(sdf.format(entity.getDate()));
+        if(entity.getLikes() != null) {
+            dto.setLikes(entity.getLikes());
         }
+        dto.setPrivacy(entity.getPrivacy());
+        dto.setUser(ApplicationUserDto.toDtoNotSensitiveNotRecursive(entity.getUser()));
+        try {
+            dto.setTags(mapper.readValue(entity.getTags(), String[].class));
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException("Could not read tags value from Post entity", e);
+        }
+        return dto;
+    }
+
+    public static PostDto toDtoNoComments(Post entity) {
+        ObjectMapper mapper = new ObjectMapper();
+        PostDto dto = new PostDto();
+        dto.setId(entity.getId());
+        dto.setImage(ImageDto.toDto(entity.getImage()));
+        dto.setSong(SongDto.toDto(entity.getSong()));
+        dto.setContent(entity.getContent());
         dto.setDate(sdf.format(entity.getDate()));
         if(entity.getLikes() != null) {
             dto.setLikes(entity.getLikes());
@@ -67,7 +88,21 @@ public class PostDto implements Serializable {
         post.setDate(sdf.parse(date));
         post.setLikes(likes);
         post.setPrivacy(privacy);
-        post.setTags(Arrays.toString(tags));
+        post.setTags(JSONArray.toJSONString(Arrays.asList(tags)));
+        post.setUser(user.toEntityNotRecursive());
+        return post;
+    }
+
+    public Post toEntityNoComments() throws ParseException {
+        Post post = new Post();
+        post.setId(id);
+        post.setImage(image.toEntity());
+        post.setSong(song.toEntity());
+        post.setContent(content);
+        post.setDate(sdf.parse(date));
+        post.setLikes(likes);
+        post.setPrivacy(privacy);
+        post.setTags(JSONArray.toJSONString(Arrays.asList(tags)));
         post.setUser(user.toEntityNotRecursive());
         return post;
     }

@@ -1,13 +1,15 @@
 package com.staticvoid.post.api;
 
-import com.staticvoid.post.domain.PostDto;
+import com.staticvoid.post.domain.dto.PostDto;
 import com.staticvoid.post.service.PostService;
-import com.staticvoid.user.domain.ApplicationUserDto;
+import com.staticvoid.user.domain.dto.ApplicationUserDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -39,5 +41,10 @@ public class PostController {
             log.error("Error creating post", e);
             return ResponseEntity.internalServerError().body(e.getMessage());
         }
+    }
+
+    @GetMapping("/api/posts/{postId}/comments/count")
+    public Integer getCommentCountForPost(@PathVariable Long postId) {
+        return postService.getCommentCountForPost(postId);
     }
 }

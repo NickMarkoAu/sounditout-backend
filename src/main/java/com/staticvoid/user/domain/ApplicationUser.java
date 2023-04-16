@@ -1,6 +1,9 @@
 package com.staticvoid.user.domain;
 
+import com.staticvoid.image.domain.Image;
 import lombok.Data;
+import org.hibernate.annotations.NotFound;
+import org.hibernate.annotations.NotFoundAction;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -9,6 +12,7 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import java.io.Serializable;
@@ -27,6 +31,11 @@ public class ApplicationUser implements Serializable, UserDetails {
     private String name;
     private String email;
     private Date dateOfBirth;
+
+    @OneToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "profile_image_id")
+    @NotFound(action = NotFoundAction.IGNORE)
+    private Image profileImage;
 
     @OneToOne
     private ApplicationUserTokens tokens;

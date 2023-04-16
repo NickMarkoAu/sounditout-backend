@@ -1,7 +1,7 @@
 package com.staticvoid.user.service;
 
 import com.staticvoid.user.domain.ApplicationUser;
-import com.staticvoid.user.domain.ApplicationUserDto;
+import com.staticvoid.user.domain.dto.ApplicationUserDto;
 import com.staticvoid.user.respository.ApplicationUserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
@@ -27,6 +27,10 @@ public class ApplicationUserService implements UserDetailsService {
             throw new UsernameNotFoundException("User not found with email: " + username);
         }
         return user;
+    }
+
+    public ApplicationUser loadUserById(Long id) {
+        return userRepository.findById(id).orElseThrow(() -> new UsernameNotFoundException("User not found with id: " + id));
     }
 
     public ApplicationUser save(ApplicationUserDto user) {

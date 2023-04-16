@@ -49,7 +49,8 @@ public class Post {
 
     private String content;
 
-    @OneToMany(fetch = FetchType.EAGER)
+    @OneToMany(fetch = FetchType.LAZY)
+    @JoinColumn(name = "post_id")
     private List<Comment> comments;
 
     private Date date;

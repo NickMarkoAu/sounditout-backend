@@ -1,6 +1,6 @@
-package com.staticvoid.songsuggestion.domain;
+package com.staticvoid.songsuggestion.domain.dto;
 
-import com.staticvoid.image.domain.ImageDto;
+import com.staticvoid.image.domain.dto.ImageDto;
 import lombok.Data;
 
 import java.io.Serializable;
