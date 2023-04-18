@@ -4,8 +4,12 @@ import com.staticvoid.post.comment.domain.Comment;
 import com.staticvoid.post.comment.domain.dto.CommentDto;
 import com.staticvoid.post.comment.service.CommentService;
 import com.staticvoid.post.domain.Post;
+import com.staticvoid.post.domain.SavedPost;
 import com.staticvoid.post.domain.dto.PostDto;
+import com.staticvoid.post.domain.dto.SavedPostDto;
+import com.staticvoid.post.reaction.service.ReactionService;
 import com.staticvoid.post.repository.PostRepository;
+import com.staticvoid.post.repository.SavedPostRepository;
 import com.staticvoid.user.domain.ApplicationUser;
 import com.staticvoid.user.domain.dto.ApplicationUserDto;
 import com.staticvoid.user.respository.ApplicationUserRepository;
@@ -29,9 +33,9 @@ public class PostService {
 
     private PostRepository postRepository;
     private ApplicationUserRepository applicationUserRepository;
-
-    @Autowired
     private CommentService commentService;
+    private ReactionService reactionService;
+    private SavedPostRepository savedPostRepository;
 
     /**
      * Gets the posts of the users that the requesting user follows. Ordered by date (newest first) and pageable
@@ -53,7 +57,10 @@ public class PostService {
         List<PostDto> postDtos = posts.getContent().stream()
                 .map(post -> {
                     List<Comment> comments = postIdToCommentsMap.getOrDefault(post.getId(), Collections.emptyList());
-                    return PostDto.toDto(post, CommentDto.toDto(comments));
+                    PostDto postDto =  PostDto.toDto(post, CommentDto.toDto(comments));
+                    postDto.setLiked(reactionService.hasUserLikedPost(post.getId(), user.getId()));
+                    postDto.setSaved(hasUserSavedPost(post.getId(), user.getId()));
+                    return postDto;
                 }).collect(Collectors.toList());
 
         return new PageImpl<>(postDtos, pageable, posts.getTotalElements());
@@ -65,6 +72,34 @@ public class PostService {
 
     public Integer getCommentCountForPost(Long postId) {
         return postRepository.findById(postId).orElseThrow().getComments().size();
+    }
+
+    public Post getPostById(Long postId) {
+        return postRepository.findById(postId).orElseThrow();
+    }
+
+    public Post savePost(Post post) {
+        return postRepository.save(post);
+    }
+
+    public boolean hasUserSavedPost(Long postId, Long userId) {
+        return savedPostRepository.existsByPostIdAndUserId(postId, userId);
+    }
+
+    public SavedPostDto userSavePost(Long postId, Long userId) {
+        SavedPost savedPost = new SavedPost();
+        Post post = postRepository.findById(postId).orElseThrow();
+        ApplicationUser user = applicationUserRepository.findById(userId).orElseThrow();
+        savedPost.setPost(post);
+        savedPost.setUser(user);
+        savedPostRepository.save(savedPost);
+        return SavedPostDto.toDto(savedPost);
+    }
+
+    public SavedPostDto userUnsavePost(Long postId, Long userId) {
+        SavedPost savedPost = savedPostRepository.findByPostIdAndUserId(postId, userId).orElseThrow();
+        savedPostRepository.delete(savedPost);
+        return SavedPostDto.toDto(savedPost);
     }
 
 }

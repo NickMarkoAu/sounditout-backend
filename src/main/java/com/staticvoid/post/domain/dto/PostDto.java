@@ -32,6 +32,8 @@ public class PostDto implements Serializable {
     private PostPrivacy privacy;
     private String[] tags;
     private ApplicationUserDto user;
+    private boolean liked;
+    private boolean saved;
 
     private static final SimpleDateFormat sdf = new SimpleDateFormat("dd MMM yyyy");
 

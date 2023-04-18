@@ -1,6 +1,7 @@
 package com.staticvoid.post.api;
 
 import com.staticvoid.post.domain.dto.PostDto;
+import com.staticvoid.post.domain.dto.SavedPostDto;
 import com.staticvoid.post.service.PostService;
 import com.staticvoid.user.domain.dto.ApplicationUserDto;
 import lombok.RequiredArgsConstructor;
@@ -46,5 +47,24 @@ public class PostController {
     @GetMapping("/api/posts/{postId}/comments/count")
     public Integer getCommentCountForPost(@PathVariable Long postId) {
         return postService.getCommentCountForPost(postId);
+    }
+
+    @PostMapping("/api/posts/save")
+    public ResponseEntity<?> savePost(@RequestBody SavedPostDto post) {
+        try {
+            if(post.getPost().isSaved()) {
+                SavedPostDto savedPost = postService.userUnsavePost(post.getPost().getId(), post.getUser().getId());
+                return ResponseEntity.ok(savedPost);
+            } else {
+                if(!postService.hasUserSavedPost(post.getUser().getId(), post.getPost().getId())) {
+                    SavedPostDto savedPost = postService.userSavePost(post.getPost().getId(), post.getUser().getId());
+                    return ResponseEntity.ok(savedPost);
+                }
+            }
+            return ResponseEntity.ok(post);
+        } catch(Exception e) {
+            log.error("Error saving post", e);
+            return ResponseEntity.internalServerError().body(e.getMessage());
+        }
     }
 }
