@@ -15,10 +15,10 @@ import com.staticvoid.user.domain.dto.ApplicationUserDto;
 import com.staticvoid.user.respository.ApplicationUserRepository;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.Collections;
@@ -49,6 +49,8 @@ public class PostService {
         //include posts by own user
         following.add(user.toEntityNotRecursive());
         List<Long> userIds = following.stream().map(ApplicationUser::getId).collect(Collectors.toList());
+        //This is going to return all public posts and all following posts.
+        // We need to work out an algorithm to return the ones that the user actually wants to see
         Page<Post> posts = postRepository.findByUsers(userIds, pageable);
 
         List<Long> postIds = posts.getContent().stream().map(Post::getId).collect(Collectors.toList());
@@ -64,6 +66,19 @@ public class PostService {
                 }).collect(Collectors.toList());
 
         return new PageImpl<>(postDtos, pageable, posts.getTotalElements());
+    }
+
+    public Page<PostDto> getUserPosts(ApplicationUserDto user, Pageable pageable) {
+        ApplicationUser loggedInUser = (ApplicationUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        ApplicationUser requestedUser = applicationUserRepository.findById(user.getId()).orElseThrow();
+        if(loggedInUser == requestedUser) {
+            //This will show all posts (including private) because they are looking at their own userProfile
+            Page<Post> posts = postRepository.findAllByUser(requestedUser, pageable);
+            return new PageImpl<>(posts.getContent().stream().map(PostDto::toDtoNoComments).collect(Collectors.toList()), pageable, posts.getTotalElements());
+        }
+        //currently, will just find public and friends posts. Need a utility to see if they are friends
+        Page<Post> posts = postRepository.findByUser(requestedUser, pageable);
+        return new PageImpl<>(posts.getContent().stream().map(PostDto::toDtoNoComments).collect(Collectors.toList()), pageable, posts.getTotalElements());
     }
 
     public PostDto createPost(PostDto post) {

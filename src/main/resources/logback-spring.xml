@@ -6,14 +6,15 @@
     <logger name="org.hibernate.validator" level="DEBUG"/>
     <logger name="org.hibernate" level="DEBUG"/>
     <logger name="org.hibernate.SQL" level="DEBUG" />
+    <logger name="org.hibernate.type.descriptor.sql" level="TRACE" />
     <logger name="org.hibernate.ejb.HibernatePersistence" level="DEBUG"/>
     <logger name="org.springframework" level="WARN"/>
     <logger name="org.springframework.web" level="WARN"/>
     <logger name="org.springframework.security" level="WARN"/>
     <logger name="org.springframework.cache" level="WARN"/>
 
-    <logger name="org.postgresql" level="INFO"/>
-    <logger name="org.postgresql.jdbc" level="WARN"/>
+    <logger name="org.postgresql" level="DEBUG"/>
+    <logger name="org.postgresql.jdbc" level="DEBUG"/>
 
     <appender name="Console"
               class="ch.qos.logback.core.ConsoleAppender">

@@ -1,6 +1,6 @@
-package com.staticvoid.text.api;
+package com.staticvoid.textgeneration.api;
 
-import com.staticvoid.text.service.TextGenerationChatService;
+import com.staticvoid.textgeneration.service.TextGenerationChatService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;

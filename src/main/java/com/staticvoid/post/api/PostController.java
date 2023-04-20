@@ -33,6 +33,17 @@ public class PostController {
         }
     }
 
+    @PostMapping("/api/posts/user")
+    public ResponseEntity<?> getUserPosts(@RequestBody ApplicationUserDto user, Pageable pageable) {
+        try {
+            Page<PostDto> posts = postService.getUserPosts(user, pageable);
+            return ResponseEntity.ok(posts);
+        } catch(Exception e) {
+            log.error("Error getting posts", e);
+            return ResponseEntity.internalServerError().body(e.getMessage());
+        }
+    }
+
     @PostMapping("/api/posts/create")
     public ResponseEntity<?> createPost(@RequestBody PostDto post) {
         try {

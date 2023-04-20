@@ -11,7 +11,7 @@ import com.staticvoid.image.recognition.service.ImageRecognitionService;
 import com.staticvoid.songsuggestion.domain.Song;
 import com.staticvoid.songsuggestion.domain.dto.SongDto;
 import com.staticvoid.songsuggestion.repository.SongRepository;
-import com.staticvoid.text.service.TextGenerationChatService;
+import com.staticvoid.textgeneration.service.TextGenerationChatService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;

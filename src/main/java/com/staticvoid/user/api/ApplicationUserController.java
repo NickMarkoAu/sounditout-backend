@@ -22,7 +22,7 @@ public class ApplicationUserController {
         try {
             return ResponseEntity.ok(ApplicationUserDto.toDto(userDetailsService.loadUserById(userId)));
         } catch (Exception e) {
-            log.error("Could not return song suggestions: ", e);
+            log.error("Could not return user: ", e);
             return ResponseEntity.internalServerError().body(e.getMessage());
         }
     }

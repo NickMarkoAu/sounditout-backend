@@ -1,6 +1,7 @@
 package com.staticvoid.user.domain;
 
 import com.staticvoid.image.domain.Image;
+import com.staticvoid.post.domain.Post;
 import lombok.Data;
 import org.hibernate.annotations.NotFound;
 import org.hibernate.annotations.NotFoundAction;
@@ -46,6 +47,9 @@ public class ApplicationUser implements Serializable, UserDetails {
 
     @OneToMany(fetch = FetchType.EAGER)
     private List<ApplicationUser> following;
+
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+    private List<Post> posts;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

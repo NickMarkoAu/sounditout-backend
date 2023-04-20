@@ -13,8 +13,15 @@ import java.util.List;
 @Repository
 public interface PostRepository extends JpaRepository<Post, Long> {
 
-    @Query(value = "SELECT * FROM post WHERE user_id IN (?1) AND (privacy=0 OR privacy=1) ORDER BY date DESC",
-            countQuery = "SELECT COUNT(*) FROM Post WHERE user IN (?1) AND (privacy LIKE 0 OR privacy LIKE 1)",
+    @Query(value = "SELECT * FROM post WHERE user_id IN (?1) AND (privacy=0 OR privacy=2) ORDER BY date DESC",
+            countQuery = "SELECT COUNT(*) FROM post WHERE user_id IN (?1) AND (privacy=0 OR privacy=2)",
             nativeQuery = true)
     Page<Post> findByUsers(List<Long> following, Pageable pageable);
+
+    @Query(value = "SELECT * FROM post WHERE user_id=?1 AND (privacy=0 OR privacy=2) ORDER BY date DESC",
+            countQuery = "SELECT COUNT(*) FROM post WHERE user_id=?1 AND (privacy=0 OR privacy=2)",
+            nativeQuery = true)
+    Page<Post> findByUser(ApplicationUser user, Pageable pageable);
+
+    Page<Post> findAllByUser(ApplicationUser user, Pageable pageable);
 }
