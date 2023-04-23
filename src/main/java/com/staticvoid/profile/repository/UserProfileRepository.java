@@ -1,4 +1,4 @@
-package com.staticvoid.userProfile.repository;
+package com.staticvoid.profile.repository;
 
 import com.staticvoid.userProfile.domain.UserProfile;
 import com.staticvoid.user.domain.ApplicationUser;

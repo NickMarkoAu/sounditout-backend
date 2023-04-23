@@ -117,4 +117,12 @@ public class PostService {
         return SavedPostDto.toDto(savedPost);
     }
 
+    public long getPostCountForUser(ApplicationUser user) {
+        return postRepository.countAllByUser(user);
+    }
+
+    public Page<Post> search(String query, Pageable pageable) {
+        return postRepository.search(query, pageable);
+    }
+
 }

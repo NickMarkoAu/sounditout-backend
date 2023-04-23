@@ -6,10 +6,10 @@ import com.staticvoid.songsuggestion.domain.dto.SongDto;
 import com.staticvoid.user.domain.ApplicationUser;
 import com.staticvoid.user.domain.dto.ApplicationUserDto;
 import lombok.Data;
-import org.springframework.data.domain.Page;
 import org.springframework.security.core.context.SecurityContextHolder;
 
 import java.io.Serializable;
+import java.util.List;
 import java.util.stream.Collectors;
 
 @Data
@@ -18,7 +18,7 @@ public class UserProfileDto implements Serializable {
     private Long followersCount;
     private Long followingCount;
     private Long postsCount;
-    private Page<PostDto> posts;
+    private List<PostDto> posts;
     private SongDto headlineSong;
     private String bio;
     private boolean isOwn;
@@ -28,7 +28,7 @@ public class UserProfileDto implements Serializable {
         UserProfileDto userProfileDto = new UserProfileDto();
         ApplicationUser loggedInUser = (ApplicationUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         // If the user is viewing their own userProfile, send all the data
-        if(loggedInUser == userProfile.getUser()) {
+        if(loggedInUser.getId().equals(userProfile.getUser().getId())) {
             userProfileDto.setUser(ApplicationUserDto.toDtoNotRecursive(userProfile.getUser()));
             userProfileDto.setOwn(true);
         } else {
@@ -36,7 +36,6 @@ public class UserProfileDto implements Serializable {
             userProfileDto.setOwn(false);
             userProfileDto.setFollowing(loggedInUser.getFollowing().stream().map(ApplicationUser::getId).collect(Collectors.toList()).contains(userProfile.getUser().getId()));
         }
-        userProfileDto.setPostsCount(userProfile.getPostsCount());
         userProfileDto.setFollowersCount(userProfile.getFollowersCount());
         userProfileDto.setFollowingCount(userProfile.getFollowingCount());
         userProfileDto.setHeadlineSong(SongDto.toDto(userProfile.getHeadlineSong()));

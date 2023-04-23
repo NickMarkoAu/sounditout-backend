@@ -5,6 +5,8 @@ import com.staticvoid.user.domain.dto.ApplicationUserDto;
 import com.staticvoid.user.respository.ApplicationUserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -16,8 +18,8 @@ public class ApplicationUserService implements UserDetailsService {
     @Autowired
     private ApplicationUserRepository userRepository;
 
-    @Autowired
     @Lazy
+    @Autowired
     private PasswordEncoder bcryptEncoder;
 
     @Override
@@ -33,11 +35,20 @@ public class ApplicationUserService implements UserDetailsService {
         return userRepository.findById(id).orElseThrow(() -> new UsernameNotFoundException("User not found with id: " + id));
     }
 
-    public ApplicationUser save(ApplicationUserDto user) {
-        //TODO when storing a new user we need to create s3 directories for them
+    public ApplicationUser saveNew(ApplicationUserDto user) {
+        //TODO when storing a new user we need to create s3 directories for them.
+        // Do we though? I'm pretty sure S3 will create the directories for us.
         ApplicationUser newUser = new ApplicationUser();
         newUser.setEmail(user.getEmail());
         newUser.setPassword(bcryptEncoder.encode(user.getPassword()));
         return userRepository.save(newUser);
+    }
+
+    public ApplicationUser save(ApplicationUser user) {
+        return userRepository.save(user);
+    }
+
+    public Page<ApplicationUser> search(String query, Pageable pageable) {
+        return userRepository.search(query, pageable);
     }
 }

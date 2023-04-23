@@ -51,12 +51,4 @@ public class UserProfile {
         }
         return 0L;
     }
-
-    @Transient
-    public Long getPostsCount() {
-        if (user != null && user.getPosts() != null) {
-            return (long) user.getPosts().size();
-        }
-        return 0L;
-    }
 }

@@ -24,4 +24,12 @@ public interface PostRepository extends JpaRepository<Post, Long> {
     Page<Post> findByUser(ApplicationUser user, Pageable pageable);
 
     Page<Post> findAllByUser(ApplicationUser user, Pageable pageable);
+
+    Long countAllByUser(ApplicationUser user);
+
+    //TODO add privacy, will need to join to see if user is following
+    @Query(value = "SELECT * FROM post WHERE content LIKE CONCAT('%',?1,'%') OR tags LIKE CONCAT('%',?1,'%') ORDER BY date DESC",
+            countQuery = "SELECT COUNT(*) FROM post WHERE content LIKE CONCAT('%',?1,'%') OR tags LIKE CONCAT('%',?1,'%')",
+            nativeQuery = true)
+    Page<Post> search(String query, Pageable pageable);
 }
