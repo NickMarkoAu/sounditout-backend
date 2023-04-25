@@ -37,10 +37,20 @@ public class UserProfileService {
     public UserProfileDto followUser(ApplicationUserDto user) {
         ApplicationUser loggedInUser = (ApplicationUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         ApplicationUser followingUser = applicationUserService.loadUserById(user.getId());
+        if(loggedInUser.getFollowing().contains(followingUser)) {
+            loggedInUser.getFollowing().remove(followingUser);
+            followingUser.getFollowers().remove(loggedInUser);
+            applicationUserService.save(followingUser);
+            applicationUserService.save(loggedInUser);
+
+            UserProfileDto userProfileDto = UserProfileDto.toDto(userProfileRepository.findByUser(followingUser));
+            userProfileDto.setPostsCount(postService.getPostCountForUser(followingUser));
+            return userProfileDto;
+        }
         loggedInUser.getFollowing().add(followingUser);
         followingUser.getFollowers().add(loggedInUser);
-        applicationUserService.save(loggedInUser);
         applicationUserService.save(followingUser);
+        applicationUserService.save(loggedInUser);
 
         UserProfile userProfile = userProfileRepository.findByUser(followingUser);
         UserProfileDto userProfileDto = UserProfileDto.toDto(userProfile);

@@ -42,30 +42,31 @@ public class SearchService {
     public Page<UserProfileDto> searchUsers(String query, Pageable pageable) {
         Page<UserProfile> userPage = userProfileService.search(query, pageable);
         List<UserProfileDto> users = userPage.stream().map(UserProfileDto::toDto).collect(Collectors.toList());
-        saveSearch(query);
+        saveSearch(query, SearchDto.SearchType.USER);
         return new PageImpl<>(users, pageable, userPage.getTotalElements());
     }
 
     public Page<PostDto> searchPosts(String query, Pageable pageable) {
         Page<Post> postPage = postService.search(query, pageable);
         List<PostDto> posts = postPage.stream().map(PostDto::toDtoNoComments).collect(Collectors.toList());
-        saveSearch(query);
+        saveSearch(query, SearchDto.SearchType.POST);
         return new PageImpl<>(posts, pageable, postPage.getTotalElements());
     }
 
     public Page<SongDto> searchMusic(String query, Pageable pageable) {
         Page<Song> songPage = songService.search(query, pageable);
         List<SongDto> songs = songPage.stream().map(SongDto::toDto).collect(Collectors.toList());
-        saveSearch(query);
+        saveSearch(query, SearchDto.SearchType.MUSIC);
         return new PageImpl<>(songs, pageable, songPage.getTotalElements());
     }
 
-    private void saveSearch(String query) {
+    private void saveSearch(String query, SearchDto.SearchType type) {
         ApplicationUser loggedInUser = (ApplicationUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         Search search = new Search();
         search.setQuery(query);
         search.setUser(loggedInUser);
         search.setDate(new Date());
+        search.setType(type);
         searchRepository.save(search);
     }
 

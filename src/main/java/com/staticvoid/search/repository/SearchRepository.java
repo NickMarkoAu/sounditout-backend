@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface SearchRepository extends JpaRepository<Search, Long> {
 
-    @Query(value = "SELECT * FROM search WHERE user_id=?1 ORDER BY date DESC LIMIT 10",
+    @Query(value = "SELECT DISTINCT ON (query, type) * FROM search WHERE user_id=?1 ORDER BY query, type, date DESC LIMIT 10",
             nativeQuery = true)
     List<Search> findRecentSearchesByUserId(Long userId);
 }
