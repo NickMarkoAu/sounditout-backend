@@ -13,8 +13,8 @@ import java.util.List;
 public interface SongRepository extends JpaRepository<Song, Long> {
     List<Song> findByImageId(Long imageId);
 
-    @Query(value = "SELECT * FROM song WHERE name LIKE CONCAT('%',?1,'%') OR tags LIKE CONCAT('%',?1,'%') OR artist LIKE CONCAT('%', ?1, '%') GROUP BY artist, name ORDER BY date DESC",
-            countQuery = "SELECT COUNT(*) FROM song WHERE name LIKE CONCAT('%',?1,'%') OR tags LIKE CONCAT('%',?1,'%') OR artist LIKE CONCAT('%', ?1, '%') GROUP BY artist, name",
+    @Query(value = "SELECT * FROM song WHERE LOWER(name) LIKE CONCAT('%',LOWER(?1),'%') OR LOWER(tags) LIKE CONCAT('%',LOWER(?1),'%') OR LOWER(artist) LIKE CONCAT('%', LOWER(?1), '%') GROUP BY artist, name ORDER BY date DESC",
+            countQuery = "SELECT COUNT(*) FROM song WHERE LOWER(name) LIKE CONCAT('%',LOWER(?1),'%') OR LOWER(tags) LIKE CONCAT('%',LOWER(?1),'%') OR LOWER(artist) LIKE CONCAT('%', LOWER(?1), '%') GROUP BY artist, name",
             nativeQuery = true)
     Page<Song> search(String query, Pageable pageable);
 }

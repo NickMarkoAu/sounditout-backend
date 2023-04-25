@@ -1,23 +1,32 @@
 package com.staticvoid.search.domain.dto;
 
 import com.staticvoid.search.domain.Search;
-import com.staticvoid.user.domain.dto.ApplicationUserDto;
+import com.staticvoid.search.domain.SearchResult;
+import lombok.Builder;
 import lombok.Data;
-
+import org.springframework.data.domain.Page;
 import java.io.Serializable;
 import java.util.Date;
 
 @Data
+@Builder
 public class SearchDto implements Serializable {
-    private String searchQuery;
+    private String query;
     private Date date;
-    private ApplicationUserDto user;
+    private Page<? extends SearchResult> results;
+    private SearchType type;
 
     public static SearchDto toDto(Search entity) {
-        SearchDto dto = new SearchDto();
-        dto.setSearchQuery(entity.getSearchQuery());
-        dto.setDate(entity.getDate());
-        dto.setUser(ApplicationUserDto.toDtoNotSensitiveNotRecursive(entity.getUser()));
-        return dto;
+        return new SearchDtoBuilder()
+                .date(entity.getDate())
+                .query(entity.getQuery())
+                .type(entity.getType())
+                .build();
+    }
+
+    public enum SearchType {
+        POST,
+        MUSIC,
+        USER
     }
 }

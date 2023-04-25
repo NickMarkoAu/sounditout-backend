@@ -2,6 +2,7 @@ package com.staticvoid.songsuggestion.domain.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.staticvoid.search.domain.SearchResult;
 import com.staticvoid.songsuggestion.domain.Song;
 import lombok.Data;
 import net.minidev.json.JSONArray;
@@ -11,7 +12,7 @@ import java.util.List;
 
 @Data
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class SongDto implements Serializable {
+public class SongDto extends SearchResult implements Serializable {
     private Long id;
     private Long imageId;
     private String userId;

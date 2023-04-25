@@ -1,4 +1,4 @@
-package com.staticvoid.userProfile.domain;
+package com.staticvoid.profile.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.staticvoid.songsuggestion.domain.Song;

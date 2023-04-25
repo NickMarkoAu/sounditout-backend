@@ -1,6 +1,7 @@
 package com.staticvoid.search.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.staticvoid.search.domain.dto.SearchDto;
 import com.staticvoid.user.domain.ApplicationUser;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -25,12 +26,14 @@ public class Search {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    private String searchQuery;
+    private String query;
 
     private Date date;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
     private ApplicationUser user;
+
+    private SearchDto.SearchType type;
 
 }

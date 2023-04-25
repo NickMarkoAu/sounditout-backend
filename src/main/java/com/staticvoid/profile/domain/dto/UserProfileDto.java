@@ -1,7 +1,8 @@
-package com.staticvoid.userProfile.domain.dto;
+package com.staticvoid.profile.domain.dto;
 
 import com.staticvoid.post.domain.dto.PostDto;
-import com.staticvoid.userProfile.domain.UserProfile;
+import com.staticvoid.profile.domain.UserProfile;
+import com.staticvoid.search.domain.SearchResult;
 import com.staticvoid.songsuggestion.domain.dto.SongDto;
 import com.staticvoid.user.domain.ApplicationUser;
 import com.staticvoid.user.domain.dto.ApplicationUserDto;
@@ -13,7 +14,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Data
-public class UserProfileDto implements Serializable {
+public class UserProfileDto extends SearchResult implements Serializable {
     private ApplicationUserDto user;
     private Long followersCount;
     private Long followingCount;

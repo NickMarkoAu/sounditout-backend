@@ -4,11 +4,12 @@ import com.staticvoid.post.service.PostService;
 import com.staticvoid.profile.repository.UserProfileRepository;
 import com.staticvoid.user.domain.ApplicationUser;
 import com.staticvoid.user.service.ApplicationUserService;
-import com.staticvoid.userProfile.domain.UserProfile;
-import com.staticvoid.userProfile.domain.dto.UserProfileDto;
+import com.staticvoid.profile.domain.UserProfile;
+import com.staticvoid.profile.domain.dto.UserProfileDto;
 import com.staticvoid.user.domain.dto.ApplicationUserDto;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
@@ -45,5 +46,9 @@ public class UserProfileService {
         UserProfileDto userProfileDto = UserProfileDto.toDto(userProfile);
         userProfileDto.setPostsCount(postService.getPostCountForUser(followingUser));
         return userProfileDto;
+    }
+
+    public Page<UserProfile> search(String query, Pageable pageable) {
+        return userProfileRepository.search(query, pageable);
     }
 }

@@ -6,6 +6,7 @@ import com.staticvoid.image.domain.dto.ImageDto;
 import com.staticvoid.post.comment.domain.dto.CommentDto;
 import com.staticvoid.post.domain.Post;
 import com.staticvoid.post.domain.PostPrivacy;
+import com.staticvoid.search.domain.SearchResult;
 import com.staticvoid.songsuggestion.domain.dto.SongDto;
 import com.staticvoid.user.domain.dto.ApplicationUserDto;
 import lombok.Data;
@@ -20,7 +21,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Data
-public class PostDto implements Serializable {
+public class PostDto extends SearchResult implements Serializable {
 
     private Long id;
     private ImageDto image;
