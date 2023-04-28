@@ -44,6 +44,23 @@ public class SongSuggestionController {
         }
     }
 
+    @PostMapping("/api/songs/{energy}/{tempo}/{warmth}")
+    public ResponseEntity<GenerateResultDto> suggestSongsFromImage(@RequestParam("file") MultipartFile file,
+                                                                   @PathVariable("energy") int energy,
+                                                                   @PathVariable("tempo") int tempo,
+                                                                   @PathVariable("warmth") int warmth) {
+        try {
+            ApplicationUser user = (ApplicationUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+            Image convFile = storageService.store(file, user);
+            imageRepository.save(convFile);
+            GenerateResultDto generateResultDto = songSuggestionService.songSuggestionResult(convFile, energy, tempo, warmth);
+            return ResponseEntity.ok(generateResultDto);
+        } catch(Exception e) {
+            log.error("Could not return song suggestions: ", e);
+            return ResponseEntity.internalServerError().body(new GenerateResultDto(e.getMessage()));
+        }
+    }
+
     @GetMapping("/api/reload-songs/")
     public Song[] reloadSongSuggestions(@RequestParam("imageId") Long imageId) {
         Image image = imageRepository.getReferenceById(imageId);

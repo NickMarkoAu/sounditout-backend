@@ -34,7 +34,17 @@ public class SongSuggestionService {
     public final Song[] songSuggestions(List<String> tags, Long imageId, Boolean refresh) {
         //TODO get these prompts from resource files
         //TODO try removing bias by taking out song suggestion
-        String prompt = String.format("List 5 real songs in json format, that have been released publicly, that are associated with these tags: %s \n use this json format" + "\n [\n" + "{\n" + "\"name\": \"Empire State of Mind\",\n" + "\"artist\": \"Jay-Z ft. Alicia Keys\",\n" + "\"releasedYear\": \"2009\",\n" + "\"tags\": [\"city\", \"urban\", \"skyscraper\", \"metropolis\", \"downtown\"]\n" + "}]", tags.toString());
+        String prompt = String.format("List 5 real songs in json format, that have been released publicly, that are associated with these tags: %s \n use this json format. Do not include anything in your response apart from JSON" + "\n [\n" + "{\n" + "\"name\": \"Empire State of Mind\",\n" + "\"artist\": \"Jay-Z ft. Alicia Keys\",\n" + "\"releasedYear\": \"2009\",\n" + "\"tags\": [\"city\", \"urban\", \"skyscraper\", \"metropolis\", \"downtown\"]\n" + "}]", tags.toString());
+        if(refresh) {
+            Song[] existingSongs = songRepository.findByImageId(imageId).toArray(new Song[0]);
+            String additionalPrompt = String.format("\n Do not include any of these songs %s", toPromptString(existingSongs));
+            prompt = prompt + additionalPrompt;
+        }
+        return getSongEntities(prompt, imageId);
+    }
+
+    public final Song[] songSuggestions(List<String> tags, Long imageId, Boolean refresh, int energy, int tempo, int warmth) {
+        String prompt = String.format("List 5 real songs in json format, that have been released publicly, that are associated with these tags: %s \n Use these values to choose the songs, these values are in a range of 1-10. Only select songs that are rated with the exact same values, energy: %s, tempo: %s, warmth: %s \n use this json format. Do not include anything in your response apart from JSON" + "\n [\n" + "{\n" + "\"name\": \"Empire State of Mind\",\n" + "\"artist\": \"Jay-Z ft. Alicia Keys\",\n" + "\"releasedYear\": \"2009\",\n" + "\"tags\": [\"city\", \"urban\", \"skyscraper\", \"metropolis\", \"downtown\"]\n" + "}]", tags.toString(), energy, tempo, warmth);
         if(refresh) {
             Song[] existingSongs = songRepository.findByImageId(imageId).toArray(new Song[0]);
             String additionalPrompt = String.format("\n Do not include any of these songs %s", toPromptString(existingSongs));
@@ -45,12 +55,6 @@ public class SongSuggestionService {
 
     public final Song[] songSuggestions(List<String> tags) {
         return songSuggestions(tags, null, false);
-    }
-
-    public final Song[] songSuggestionsWithGenres(List<String> tags, Long imageId, List<String> genres) {
-        String prompt = String.format("List 5 real songs in json format that are associated with these tags: %s" + "\n in these genres: %s" + " \n use this json format" + "\n [\n" + "{\n" + "\"name\": \"Empire State of Mind\",\n" + "\"artist\": \"Jay-Z ft. Alicia Keys\",\n" + "\"tags\": [\"city\", \"urban\", \"skyscraper\", \"metropolis\", \"downtown\"]\n" + "}]", tags.toString(), genres.toString());
-
-        return getSongEntities(prompt, imageId);
     }
 
     private Song[] getSongEntities(String prompt, Long imageId) {
@@ -80,6 +84,11 @@ public class SongSuggestionService {
         return songSuggestions(tags, image.getId(), false);
     }
 
+    public final Song[] songSuggestions(Image image, int energy, int tempo, int warmth) {
+        List<String> tags = imageRecognitionService.detectImageLabels(image);
+        return songSuggestions(tags, image.getId(), false, energy, tempo, warmth);
+    }
+
     public final GenerateResultDto songSuggestionResult(Image image) {
         List<String> tags = imageRecognitionService.detectImageLabels(image);
         Song[] songs = songSuggestions(tags, image.getId(), false);
@@ -87,9 +96,11 @@ public class SongSuggestionService {
         return new GenerateResultDto(songDtos, tags.toArray(new String[0]), ImageDto.toDto(image));
     }
 
-    public final Song[] songSuggestionsWithGenres(Image image, List<String> genres) {
+    public final GenerateResultDto songSuggestionResult(Image image, int energy, int tempo, int warmth) {
         List<String> tags = imageRecognitionService.detectImageLabels(image);
-        return songSuggestionsWithGenres(tags, image.getId(), genres);
+        Song[] songs = songSuggestions(tags, image.getId(), false, energy, tempo, warmth);
+        SongDto[] songDtos = Arrays.stream(songs).map(SongDto::toDto).toArray(SongDto[]::new);
+        return new GenerateResultDto(songDtos, tags.toArray(new String[0]), ImageDto.toDto(image));
     }
 
     public final Song[] reloadSongSuggestions(Image image) {

@@ -42,12 +42,14 @@ public class ImageDto implements Serializable {
         imageDto.setId(image.getId());
         imageDto.setFileName(image.getFileName());
         imageDto.setUserId(image.getUserId());
-        //get from s3 and serve up base 64 byte array to display on front end
+        //get presigned URL from S3
         imageDto.setPresignedUrl(AwsUtil.generatePresignedUrl(image.getS3uri()).toString());
-        try {
-            imageDto.setTags(mapper.readValue(image.getTags(), String[].class));
-        } catch (JsonProcessingException e) {
-            throw new RuntimeException("Could not read tags value from Image entity", e);
+        if(image.getTags() != null) {
+            try {
+                imageDto.setTags(mapper.readValue(image.getTags(), String[].class));
+            } catch (JsonProcessingException e) {
+                throw new RuntimeException("Could not read tags value from Image entity", e);
+            }
         }
         imageDto.setFile(image.getFile());
         return imageDto;

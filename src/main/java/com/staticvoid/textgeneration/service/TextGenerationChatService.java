@@ -6,8 +6,8 @@ import com.theokanning.openai.completion.chat.ChatCompletionResult;
 import com.theokanning.openai.completion.chat.ChatMessage;
 import com.theokanning.openai.service.OpenAiService;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-
 import java.time.Duration;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
@@ -17,21 +17,25 @@ import java.util.stream.Collectors;
 @Slf4j
 public class TextGenerationChatService {
 
-    //TODO move this to config
-    private static final String API_KEY = "";
-    //TODO play with temperature, let client choose this within a range?
+    private final String apiKey;
+    private final String model;
     private static final Double TEMPERATURE = 0.5;
-    private static final String MODEL = "gpt-3.5-turbo";
     private static final Integer MAX_TOKENS = 500;
     private static final Duration TIMEOUT = Duration.of(60L, ChronoUnit.SECONDS);
 
+    public TextGenerationChatService(@Value("${openai.api-key}") String apiKey,
+                                     @Value("${openai.model}") String model) {
+        this.apiKey = apiKey;
+        this.model = model;
+    }
+
     public String generateFromPrompt(String prompt) {
-        OpenAiService service = new OpenAiService(API_KEY, TIMEOUT);
+        OpenAiService service = new OpenAiService(apiKey, TIMEOUT);
 
         List<ChatMessage> chatMessages = List.of(new ChatMessage("user",prompt));
         ChatCompletionRequest completionRequest = ChatCompletionRequest.builder()
                 .messages(chatMessages)
-                .model(MODEL)
+                .model(model)
                 .maxTokens(MAX_TOKENS)
                 .temperature(TEMPERATURE)
                 .build();

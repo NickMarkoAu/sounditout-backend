@@ -14,6 +14,8 @@ import org.springframework.orm.jpa.vendor.Database;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
+import org.springframework.web.client.RestTemplate;
+import org.springframework.web.util.DefaultUriBuilderFactory;
 
 import javax.persistence.EntityManagerFactory;
 
@@ -57,5 +59,14 @@ public class ApplicationProperties {
         hibernateJpaVendorAdapter.setGenerateDdl(true);
         hibernateJpaVendorAdapter.setDatabase(Database.POSTGRESQL);
         return hibernateJpaVendorAdapter;
+    }
+
+    @Bean
+    public RestTemplate restTemplate() {
+        DefaultUriBuilderFactory defaultUriBuilderFactory = new DefaultUriBuilderFactory();
+        defaultUriBuilderFactory.setEncodingMode(DefaultUriBuilderFactory.EncodingMode.NONE);
+        RestTemplate restTemplate = new RestTemplate();
+        restTemplate.setUriTemplateHandler(defaultUriBuilderFactory);
+        return restTemplate;
     }
 }

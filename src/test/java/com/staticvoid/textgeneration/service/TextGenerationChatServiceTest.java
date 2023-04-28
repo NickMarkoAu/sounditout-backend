@@ -4,6 +4,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -12,12 +13,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 @Slf4j
 class TextGenerationChatServiceTest {
 
+    @Autowired
     private TextGenerationChatService service;
-
-    @BeforeEach
-    void setup() {
-        service = new TextGenerationChatService();
-    }
 
     @Test
     void should_generate_text() {

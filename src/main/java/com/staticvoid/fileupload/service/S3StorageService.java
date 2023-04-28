@@ -37,7 +37,9 @@ public class S3StorageService {
             File convFile = new File(System.getProperty("java.io.tmpdir") + "/" + s3Key);
             convFile.mkdirs();
             file.transferTo(convFile);
-            return putImage(user, s3Key, convFile);
+            Image image = putImage(user, s3Key, convFile);
+            convFile.delete();
+            return image;
         } catch (Exception e) {
             throw new RuntimeException("Could not upload file", e);
         }
@@ -46,7 +48,6 @@ public class S3StorageService {
     public Image putImage(ApplicationUser user, String s3Key, File convFile) throws FileNotFoundException {
         InputStream is = new FileInputStream(convFile);
         s3.putObject(BUCKET_NAME, s3Key, is, new ObjectMetadata());
-        convFile.delete();
         return s3KeyAndUserToImage(s3Key, user);
     }
 
