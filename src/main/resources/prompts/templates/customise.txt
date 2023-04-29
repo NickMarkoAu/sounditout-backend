@@ -1,0 +1,1 @@
+Use these values to choose the songs, these values are in a range of 1-10. Only select songs that are rated with the exact same values, energy: %s, tempo: %s, warmth: %s

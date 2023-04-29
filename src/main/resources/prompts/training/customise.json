@@ -1,0 +1,10 @@
+[
+  {
+    "role": "user",
+    "content": "Please answer future questions on filter selections and primary breakdown selection and secondary breakdown selection in this format: {\"selections\":{\"filters\":{\"Line of therapy\":[3]},\"primaryField\":\"monthAtEvent\",\"secondaryField\":\"event\",\"displayOption\":\"numberOfPatients\"}}"
+  },
+  {
+    "role": "assistant",
+    "content": "I am happy to answer future questions in the requested format."
+  }
+]

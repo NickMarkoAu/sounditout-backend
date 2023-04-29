@@ -3,9 +3,9 @@ package com.staticvoid.songsuggestion.service;
 import com.staticvoid.fileupload.service.S3StorageService;
 import com.staticvoid.image.domain.Image;
 import com.staticvoid.songsuggestion.domain.Song;
+import com.staticvoid.songsuggestion.domain.dto.SongDto;
 import com.staticvoid.user.domain.ApplicationUser;
 import lombok.extern.slf4j.Slf4j;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,8 +14,6 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.net.URISyntaxException;
-import java.net.URL;
 import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.List;
@@ -26,10 +24,10 @@ import static org.junit.jupiter.api.Assertions.assertNotEquals;
 @Slf4j
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringBootTest
-class SongSuggestionServiceTest {
+class SongSuggestionServiceSingleShotTest {
 
     @Autowired
-    private SongSuggestionService songSuggestionService;
+    private SongSuggestionServiceSingleShot songSuggestionService;
 
     private final S3StorageService storageService = new S3StorageService();
 
@@ -41,7 +39,7 @@ class SongSuggestionServiceTest {
 
         log.info("Songs: {}", Arrays.toString(songs));
 
-        assertEquals(songs.length, 5);
+        assertEquals(5, songs.length);
     }
 
     @Test
@@ -51,11 +49,11 @@ class SongSuggestionServiceTest {
         user.setId(12345L);
         Image image = storageService.putImage(user, "test-image.jpg", file);
 
-        Song[] songs = songSuggestionService.songSuggestions(image);
+        SongDto[] songs = songSuggestionService.songSuggestionResult(image).getSongs();
 
         log.info("Songs: {}", Arrays.toString(songs));
 
-        assertEquals(songs.length, 5);
+        assertEquals(5, songs.length);
     }
 
     @Test
@@ -64,11 +62,11 @@ class SongSuggestionServiceTest {
         ApplicationUser user = new ApplicationUser();
         user.setId(12345L);
         Image image = storageService.putImage(user, "test-image2.jpg", file);
-        Song[] songs = songSuggestionService.songSuggestions(image);
+        SongDto[] songs = songSuggestionService.songSuggestionResult(image).getSongs();
 
         log.info("Songs: {}", Arrays.toString(songs));
 
-        assertEquals(songs.length, 5);
+        assertEquals(5, songs.length);
     }
 
     @Test
@@ -77,11 +75,11 @@ class SongSuggestionServiceTest {
         ApplicationUser user = new ApplicationUser();
         user.setId(12345L);
         Image image = storageService.putImage(user, "test-image3.jpg", file);
-        Song[] songs = songSuggestionService.songSuggestions(image);
+        SongDto[] songs = songSuggestionService.songSuggestionResult(image).getSongs();
 
         log.info("Songs: {}", Arrays.toString(songs));
 
-        assertEquals(songs.length, 5);
+        assertEquals(5, songs.length);
     }
 
     @Test
@@ -90,11 +88,11 @@ class SongSuggestionServiceTest {
         ApplicationUser user = new ApplicationUser();
         user.setId(12345L);
         Image image = storageService.putImage(user, "test-image4.jpg", file);
-        Song[] songs = songSuggestionService.songSuggestions(image);
+        SongDto[] songs = songSuggestionService.songSuggestionResult(image).getSongs();
 
         log.info("Songs: {}", Arrays.toString(songs));
 
-        assertEquals(songs.length, 5);
+        assertEquals(5, songs.length);
     }
 
     @Test
@@ -104,11 +102,11 @@ class SongSuggestionServiceTest {
         user.setId(12345L);
         Image image = storageService.putImage(user, "test-image5.jpg", file);
 
-        Song[] songs = songSuggestionService.songSuggestions(image);
+        SongDto[] songs = songSuggestionService.songSuggestionResult(image).getSongs();
 
         log.info("Songs: {}", Arrays.toString(songs));
 
-        assertEquals(songs.length, 5);
+        assertEquals(5, songs.length);
     }
 
     @Test
@@ -122,11 +120,11 @@ class SongSuggestionServiceTest {
         int tempo = 5;
         int warmth = 2;
 
-        Song[] songs = songSuggestionService.songSuggestions(image, energy, tempo, warmth);
+        SongDto[] songs = songSuggestionService.songSuggestionResult(image).getSongs();
 
         log.info("Songs: {}", Arrays.toString(songs));
 
-        assertEquals(songs.length, 5);
+        assertEquals(5, songs.length);
     }
 
     @Test

@@ -1,0 +1,4 @@
+Please list 5 real songs in json format that feel like the image I am about to describe. They must be real songs that have been released publicly.
+I will provide an image caption and a list of tags that have been collected from the image. You must use these tags and the caption to find songs that feel like the image.
+Use this json format: %s [{"name": "song-name": "artist-name","releasedYear": "year-released","tags": ["tag1", "tag2", "tag3"]}]
+Do not include anything in your response apart from JSON. We still start with some examples, ready?

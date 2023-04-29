@@ -30,15 +30,12 @@ class CaptionServiceTest {
 
     @Test
     void should_caption_image() throws Exception {
-        File file = Paths.get("src", "test", "resources", "img", "test-image.jpg").toFile();
+        File file = Paths.get("src", "test", "resources", "img", "test-image2.jpg").toFile();
         ApplicationUser user = new ApplicationUser();
         user.setId(12345L);
-        Image image = storageService.putImage(user, "test-image.jpg", file);
-        ImageDto imageDto = ImageDto.toDto(image);
+        Image image = storageService.putImage(user, "test-image2.jpg", file);
 
-        String presignedUrl = imageDto.getPresignedUrl();
-        log.info("Presigned URL: {}", presignedUrl);
-        CaptionResponseDto captionResponseDto = service.generateCaption(presignedUrl);
+        CaptionResponseDto captionResponseDto = service.generateCaption(image);
         log.info("Response: {}", captionResponseDto);
         String caption = captionResponseDto.getCaptionResult().getText();
 

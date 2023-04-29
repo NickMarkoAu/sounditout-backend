@@ -45,6 +45,15 @@ public class S3StorageService {
         }
     }
 
+    public Image store(File file, ApplicationUser user) {
+        try {
+            String s3Key = getS3Key(user, FilenameUtils.getExtension(file.getName()));
+            return putImage(user, s3Key, file);
+        } catch (Exception e) {
+            throw new RuntimeException("Could not upload file", e);
+        }
+    }
+
     public Image putImage(ApplicationUser user, String s3Key, File convFile) throws FileNotFoundException {
         InputStream is = new FileInputStream(convFile);
         s3.putObject(BUCKET_NAME, s3Key, is, new ObjectMetadata());

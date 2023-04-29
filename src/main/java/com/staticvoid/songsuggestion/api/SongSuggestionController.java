@@ -6,7 +6,8 @@ import com.staticvoid.image.repository.ImageRepository;
 import com.staticvoid.songsuggestion.domain.SongMetadata;
 import com.staticvoid.songsuggestion.domain.dto.GenerateResultDto;
 import com.staticvoid.songsuggestion.domain.Song;
-import com.staticvoid.songsuggestion.service.SongSuggestionService;
+import com.staticvoid.songsuggestion.service.SongSuggestionServiceFewShot;
+import com.staticvoid.songsuggestion.service.SongSuggestionServiceSingleShot;
 import com.staticvoid.user.domain.ApplicationUser;
 import com.staticvoid.user.service.ApplicationUserService;
 import lombok.RequiredArgsConstructor;
@@ -25,7 +26,7 @@ import org.springframework.web.multipart.MultipartFile;
 @Slf4j
 public class SongSuggestionController {
 
-    private final SongSuggestionService songSuggestionService;
+    private final SongSuggestionServiceFewShot songSuggestionServiceSingleShot;
     private final S3StorageService storageService = new S3StorageService();
     private final ImageRepository imageRepository;
     private final ApplicationUserService applicationUserService;
@@ -36,7 +37,7 @@ public class SongSuggestionController {
             ApplicationUser user = (ApplicationUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
             Image convFile = storageService.store(file, user);
             imageRepository.save(convFile);
-            GenerateResultDto generateResultDto = songSuggestionService.songSuggestionResult(convFile);
+            GenerateResultDto generateResultDto = songSuggestionServiceSingleShot.songSuggestionResult(convFile);
             return ResponseEntity.ok(generateResultDto);
         } catch(Exception e) {
             log.error("Could not return song suggestions: ", e);
@@ -53,7 +54,7 @@ public class SongSuggestionController {
             ApplicationUser user = (ApplicationUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
             Image convFile = storageService.store(file, user);
             imageRepository.save(convFile);
-            GenerateResultDto generateResultDto = songSuggestionService.songSuggestionResult(convFile, energy, tempo, warmth);
+            GenerateResultDto generateResultDto = songSuggestionServiceSingleShot.songSuggestionResult(convFile, energy, tempo, warmth);
             return ResponseEntity.ok(generateResultDto);
         } catch(Exception e) {
             log.error("Could not return song suggestions: ", e);
@@ -64,11 +65,11 @@ public class SongSuggestionController {
     @GetMapping("/api/reload-songs/")
     public Song[] reloadSongSuggestions(@RequestParam("imageId") Long imageId) {
         Image image = imageRepository.getReferenceById(imageId);
-        return songSuggestionService.reloadSongSuggestions(image);
+        return songSuggestionServiceSingleShot.reloadSongSuggestions(image);
     }
 
     @GetMapping("/api/songs/metadata/{songId}")
     public SongMetadata getSongMetadata(@PathVariable Long songId) {
-        return songSuggestionService.getSongMetadata(songId);
+        return songSuggestionServiceSingleShot.getSongMetadata(songId);
     }
 }

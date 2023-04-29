@@ -1,4 +1,4 @@
-package com.staticvoid.image.recognition.service;
+package com.staticvoid.image.service;
 
 import com.staticvoid.image.domain.Image;
 import com.staticvoid.image.repository.ImageRepository;

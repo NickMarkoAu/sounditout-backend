@@ -7,6 +7,7 @@ import com.amazonaws.services.rekognition.model.DetectLabelsResult;
 import com.amazonaws.services.rekognition.model.Label;
 import com.staticvoid.fileupload.service.S3StorageService;
 import com.staticvoid.image.repository.ImageRepository;
+import com.staticvoid.image.service.ImageRecognitionService;
 import com.staticvoid.util.AwsCredentials;
 import com.staticvoid.util.AwsUtil;
 import lombok.extern.slf4j.Slf4j;
@@ -26,20 +27,21 @@ import java.util.stream.Collectors;
 
 @Service
 @Slf4j
-public class ImageRecognitionService {
+public class RekognitionService implements ImageRecognitionService {
     private final AmazonRekognitionClient rekClient;
     @Autowired
     private ImageRepository imageRepository;
     private static final Integer MAX_LABELS = 15;
     private static final S3StorageService s3StorageService = new S3StorageService();
 
-    public ImageRecognitionService() {
+    public RekognitionService() {
         this.rekClient = (AmazonRekognitionClient) AmazonRekognitionClientBuilder.standard()
                 .withCredentials(AwsCredentials.defaultCredentials())
                 .withRegion(AwsUtil.REGION)
                 .build();
     }
 
+    @Override
     public List<String> detectImageLabels(com.staticvoid.image.domain.Image image) {
         try {
             //TODO file is already on s3 at this point to it should be faster to use the s3 key and pass that to rekognition rather than get the image and use the file
@@ -54,6 +56,7 @@ public class ImageRecognitionService {
         }
     }
 
+    @Override
     public List<String> detectImageLabels(File sourceImage) {
         List<String> result = new ArrayList<>();
         try {
