@@ -1,1 +1,5 @@
-Use these values to choose the songs, these values are in a range of 1-10. Only select songs that are rated with the exact same values, energy: %s, tempo: %s, warmth: %s
+Please list 5 real songs in json format that feel like the image I am about to describe. They must be real songs that have been released publicly.
+I will provide an image caption and a list of tags that have been collected from the image. I will also provide some customisation values that range from 1-10.
+You must use these tags, caption, and customisation values to find songs that feel like the image and values. Only select songs that are rated with the exact same values
+Use this json format: %s [{"name": "song-name": "artist-name","releasedYear": "year-released","tags": ["tag1", "tag2", "tag3"]}]
+Do not include anything in your response apart from JSON. We still start with some examples, ready?

@@ -1,0 +1,3 @@
+Provide song suggestions for this image. Caption: "%s"
+Tags: %s
+Customisation: [energy: %s, tempo: %s, warmth: %s]

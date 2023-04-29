@@ -1,10 +1,26 @@
 [
   {
     "role": "user",
-    "content": "Please answer future questions on filter selections and primary breakdown selection and secondary breakdown selection in this format: {\"selections\":{\"filters\":{\"Line of therapy\":[3]},\"primaryField\":\"monthAtEvent\",\"secondaryField\":\"event\",\"displayOption\":\"numberOfPatients\"}}"
+    "content": "#initialprompt"
   },
   {
     "role": "assistant",
-    "content": "I am happy to answer future questions in the requested format."
+    "content": "Yes ready to go! I am happy to provide song suggestions for your image in the requested format."
+  },
+  {
+    "role": "user",
+    "content": "Provide song suggestions for this image. Caption: \"a city skyline with water and blue sky\" Tags: [\"city\",\"cityscape\",\"urban\",\"office-building\",\"metropolis\",\"tower\",\"water\",\"waterfront\",\"high-rise\",\"nature\",\"outdoors\",\"sky\",\"scenery\",\"downtown\",\"horizon\"]"
+  },
+  {
+    "role": "assistant",
+    "content": "[{\"name\": \"Empire State of Mind\",\"artist\": \"Jay-Z ft. Alicia Keys\",\"releasedYear\": \"2009\",\"tags\": [\"city\", \"urban\", \"skyscraper\", \"metropolis\", \"downtown\"]},{\"name\": \"Waterfront\",\"artist\": \"Simple Minds\",\"releasedYear\": \"1983\",\"tags\": [\"water\", \"waterfront\", \"city\", \"scenery\"]},{\"name\": \"Horizon\",\"artist\": \"Daft Punk\",\"releasedYear\": \"2013\",\"tags\": [\"sky\", \"horizon\", \"nature\", \"outdoors\"]},{\"name\": \"High Rise\",\"artist\": \"Stone Temple Pilots\",\"releasedYear\": \"2010\",\"tags\": [\"high-rise\", \"office-building\", \"cityscape\", \"downtown\"]},{\"name\": \"City of Blinding Lights\",\"artist\": \"U2\",\"releasedYear\": \"2005\",\"tags\": [\"city\", \"sky\", \"scenery\", \"downtown\"]}]"
+  },
+  {
+    "role": "user",
+    "content": "Provide song suggestions for this image. Caption: \"a person jumping on a ramp\" Tags: [\"water\",\"adult\",\"male\",\"man\",\"person\",\"water-sports\",\"boat\",\"water-skiing\",\"adventure\",\"tree\",\"lifejacket\",\"vest\",\"outdoors\",\"boating\"]"
+  },
+  {
+    "role": "assistant",
+    "content": "[{\"name\":\"Boat Drinks\",\"artist\":\"Jimmy Buffett\",\"releasedYear\":\"1979\",\"tags\":[\"water\",\"adult\",\"male\",\"man\",\"person\",\"water-sports\",\"boat\",\"water-skiing\",\"adventure\",\"outdoors\",\"boating\"]},{\"name\":\"The River\",\"artist\":\"Bruce Springsteen\",\"releasedYear\":\"1980\",\"tags\":[\"water\",\"adult\",\"male\",\"man\",\"person\",\"water-sports\",\"boat\",\"adventure\",\"tree\",\"outdoors\",\"lifejacket\",\"vest\",\"boating\"]},{\"name\":\"Pontoon\",\"artist\":\"Little Big Town\",\"releasedYear\":\"2012\",\"tags\":[\"water\",\"adult\",\"male\",\"man\",\"person\",\"water-sports\",\"boat\",\"water-skiing\",\"adventure\",\"outdoors\",\"boating\"]},{\"name\":\"Lake of Fire\",\"artist\":\"Nirvana\",\"releasedYear\":\"1994\",\"tags\":[\"water\",\"adult\",\"male\",\"man\",\"person\",\"water-sports\",\"boat\",\"adventure\",\"tree\",\"outdoors\",\"lifejacket\",\"vest\",\"boating\"]},{\"name\":\"River of Dreams\",\"artist\":\"Billy Joel\",\"releasedYear\":\"1993\",\"tags\":[\"water\",\"adult\",\"male\",\"man\",\"person\",\"water-sports\",\"boat\",\"adventure\",\"tree\",\"outdoors\",\"lifejacket\",\"vest\",\"boating\"]}]"
   }
 ]

@@ -111,16 +111,16 @@ class SongSuggestionServiceSingleShotTest {
 
     @Test
     void should_return_song_suggestions_from_image_with_customisation_values() throws FileNotFoundException {
-        File file = Paths.get("src", "test", "resources", "img", "test-image.jpg").toFile();
+        File file = Paths.get("src", "test", "resources", "img", "test-image3.png").toFile();
         ApplicationUser user = new ApplicationUser();
         user.setId(12345L);
-        Image image = storageService.putImage(user, "test-image.jpg", file);
+        Image image = storageService.putImage(user, "test-image3.png", file);
 
         int energy = 5;
         int tempo = 5;
         int warmth = 2;
 
-        SongDto[] songs = songSuggestionService.songSuggestionResult(image).getSongs();
+        SongDto[] songs = songSuggestionService.songSuggestionResult(image, energy, tempo, warmth).getSongs();
 
         log.info("Songs: {}", Arrays.toString(songs));
 
@@ -129,30 +129,25 @@ class SongSuggestionServiceSingleShotTest {
 
     @Test
     void should_select_different_songs_with_different_values() throws FileNotFoundException {
-        File file = Paths.get("src", "test", "resources", "img", "test-image.jpg").toFile();
+        File file = Paths.get("src", "test", "resources", "img", "test-image3.png").toFile();
         ApplicationUser user = new ApplicationUser();
         user.setId(12345L);
-        Image image = storageService.putImage(user, "test-image.jpg", file);
+        Image image = storageService.putImage(user, "test-image3.png", file);
 
         int energy = 5;
         int tempo = 5;
         int warmth = 2;
 
-        Song[] songs1 = songSuggestionService.songSuggestions(image, energy, tempo, warmth);
-
+        SongDto[] songs1 = songSuggestionService.songSuggestionResult(image, energy, tempo, warmth).getSongs();
         log.info("Songs #1: {}", Arrays.toString(songs1));
 
         energy = 9;
         tempo = 9;
         warmth = 9;
 
-        Song[] songs2 = songSuggestionService.songSuggestions(image, energy, tempo, warmth);
-
-        Arrays.asList(songs1).forEach(song -> {
-            Arrays.asList(songs2).forEach(song2 -> {
-                assertNotEquals(song, song2);
-            });
-        });
+        SongDto[] songs2 = songSuggestionService.songSuggestionResult(image, energy, tempo, warmth).getSongs();
+        log.info("Songs #2: {}", Arrays.toString(songs2));
+        Arrays.asList(songs1).forEach(song -> Arrays.asList(songs2).forEach(song2 -> assertNotEquals(song, song2)));
     }
 
 
