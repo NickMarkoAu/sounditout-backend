@@ -10,6 +10,7 @@ import com.staticvoid.search.domain.SearchResult;
 import com.staticvoid.songsuggestion.domain.dto.SongDto;
 import com.staticvoid.user.domain.dto.ApplicationUserDto;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import net.minidev.json.JSONArray;
 
 import java.io.Serializable;
@@ -20,6 +21,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@EqualsAndHashCode(callSuper = true)
 @Data
 public class PostDto extends SearchResult implements Serializable {
 

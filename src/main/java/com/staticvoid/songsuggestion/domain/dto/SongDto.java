@@ -5,11 +5,13 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.staticvoid.search.domain.SearchResult;
 import com.staticvoid.songsuggestion.domain.Song;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import net.minidev.json.JSONArray;
 
 import java.io.Serializable;
 import java.util.List;
 
+@EqualsAndHashCode(callSuper = true)
 @Data
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class SongDto extends SearchResult implements Serializable {

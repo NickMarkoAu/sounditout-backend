@@ -7,12 +7,14 @@ import com.staticvoid.songsuggestion.domain.dto.SongDto;
 import com.staticvoid.user.domain.ApplicationUser;
 import com.staticvoid.user.domain.dto.ApplicationUserDto;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import org.springframework.security.core.context.SecurityContextHolder;
 
 import java.io.Serializable;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@EqualsAndHashCode(callSuper = true)
 @Data
 public class UserProfileDto extends SearchResult implements Serializable {
     private ApplicationUserDto user;
