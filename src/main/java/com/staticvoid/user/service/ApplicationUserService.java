@@ -32,7 +32,7 @@ public class ApplicationUserService implements UserDetailsService {
     }
 
     public ApplicationUser loadUserById(Long id) {
-        return userRepository.findById(id).orElseThrow(() -> new UsernameNotFoundException("User not found with id: " + id));
+        return userRepository.findById(id).orElse(null);
     }
 
     public ApplicationUser saveNew(ApplicationUserDto user) {

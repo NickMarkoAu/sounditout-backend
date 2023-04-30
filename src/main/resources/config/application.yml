@@ -1,6 +1,7 @@
 spring:
   application:
     name: SoundItOut
+    isAlphaMode: true
   datasource:
     platform: postgres
     driverClassName: org.postgresql.Driver

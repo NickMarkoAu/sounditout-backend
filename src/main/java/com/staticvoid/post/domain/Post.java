@@ -7,7 +7,12 @@ import com.staticvoid.songsuggestion.domain.Song;
 import com.staticvoid.user.domain.ApplicationUser;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
+import org.hibernate.Hibernate;
 import org.hibernate.annotations.NotFound;
 import org.hibernate.annotations.NotFoundAction;
 
@@ -22,12 +27,15 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 
 @Entity
 @JsonIgnoreProperties(ignoreUnknown = true)
 @AllArgsConstructor
 @NoArgsConstructor
-@Data
+@Getter
+@Setter
+@ToString
 public class Post {
 
     @Id
@@ -52,6 +60,7 @@ public class Post {
 
     @OneToMany(fetch = FetchType.LAZY)
     @JoinColumn(name = "post_id")
+    @ToString.Exclude
     private List<Comment> comments;
 
     private Date date;
@@ -64,5 +73,17 @@ public class Post {
 
     private String tags;
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
+        Post post = (Post) o;
+        return id != null && Objects.equals(id, post.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return getClass().hashCode();
+    }
 }
 
