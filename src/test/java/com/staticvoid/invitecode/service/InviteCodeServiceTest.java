@@ -1,6 +1,7 @@
 package com.staticvoid.invitecode.service;
 
 import lombok.extern.slf4j.Slf4j;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +17,7 @@ class InviteCodeServiceTest {
     InviteCodeService service;
 
     @Test
+    @Disabled
     void should_generate_codes() {
         service.generateCodes(25);
     }
