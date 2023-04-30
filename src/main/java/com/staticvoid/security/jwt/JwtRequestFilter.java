@@ -38,7 +38,11 @@ public class JwtRequestFilter extends OncePerRequestFilter {
         String jwtToken = null;
         // JWT Token is in the form "Bearer token". Remove Bearer word and get
         // only the Token
-        if (!request.getRequestURL().toString().contains("api/auth/login") && !request.getRequestURL().toString().contains("api/auth/register")) {
+        if (!request.getRequestURL().toString().contains("api/auth/login")
+                && !request.getRequestURL().toString().contains("api/auth/register")
+                && !request.getRequestURL().toString().contains("api/auth/refresh")
+                && !request.getRequestURL().toString().contains("/api/invite/validate")
+                && !request.getRequestURL().toString().contains("/api/appinfo")) {
             if (requestTokenHeader != null && requestTokenHeader.startsWith("Bearer ")) {
                 jwtToken = requestTokenHeader.substring(7);
                 try {

@@ -1,5 +1,6 @@
 package com.staticvoid.user.service;
 
+import com.staticvoid.security.jwt.JwtTokenUtil;
 import com.staticvoid.user.domain.ApplicationUser;
 import com.staticvoid.user.domain.dto.ApplicationUserDto;
 import com.staticvoid.user.respository.ApplicationUserRepository;
@@ -21,6 +22,9 @@ public class ApplicationUserService implements UserDetailsService {
     @Lazy
     @Autowired
     private PasswordEncoder bcryptEncoder;
+
+    @Autowired
+    private JwtTokenUtil jwtTokenUtil;
 
     @Override
     public ApplicationUser loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -50,5 +54,10 @@ public class ApplicationUserService implements UserDetailsService {
 
     public Page<ApplicationUser> search(String query, Pageable pageable) {
         return userRepository.search(query, pageable);
+    }
+
+    public ApplicationUser getUserByToken(String token) {
+        String username = jwtTokenUtil.getUsernameFromToken(token);
+        return loadUserByUsername(username);
     }
 }

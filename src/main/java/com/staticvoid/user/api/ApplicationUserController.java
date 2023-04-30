@@ -17,10 +17,20 @@ public class ApplicationUserController {
 
     private final ApplicationUserService userDetailsService;
 
-    @GetMapping("/api/user/{userId}")
+    @GetMapping("/api/user/get/{userId}")
     public ResponseEntity<?> getUser(@PathVariable Long userId) {
         try {
             return ResponseEntity.ok(ApplicationUserDto.toDto(userDetailsService.loadUserById(userId)));
+        } catch (Exception e) {
+            log.error("Could not return user: ", e);
+            return ResponseEntity.internalServerError().body(e.getMessage());
+        }
+    }
+
+    @GetMapping("/api/user/token/{token}")
+    public ResponseEntity<?> getUserFromToken(@PathVariable String token) {
+        try {
+            return ResponseEntity.ok(ApplicationUserDto.toDto(userDetailsService.getUserByToken(token)));
         } catch (Exception e) {
             log.error("Could not return user: ", e);
             return ResponseEntity.internalServerError().body(e.getMessage());

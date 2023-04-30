@@ -15,7 +15,7 @@ public class InviteCodeController {
 
     private final InviteCodeService inviteCodeService;
 
-    @GetMapping("/api/invitecode/validate/{code}")
+    @GetMapping("/api/invite/validate/{code}")
     public ResponseEntity<?> validateCode(@PathVariable("code") String code) {
         try {
             boolean isValid = inviteCodeService.validateCode(code);

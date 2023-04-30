@@ -33,7 +33,8 @@ public class ImageDto implements Serializable {
     private String presignedUrl;
 
     public Image toEntity() {
-        return new Image(id, fileName, userId, JSONArray.toJSONString(Arrays.asList(tags)), file);
+        String tags = this.tags != null ? JSONArray.toJSONString(Arrays.asList(this.tags)) : "";
+        return new Image(id, fileName, userId, tags, file);
     }
 
     public static ImageDto toDto(Image image) {

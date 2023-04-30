@@ -8,7 +8,7 @@ apply plugin: 'java'
 apply plugin: 'io.spring.dependency-management'
 apply plugin: 'org.springframework.boot'
 
-group 'org.example'
+group 'com.staticvoid'
 version '1.0-SNAPSHOT'
 
 configurations {
