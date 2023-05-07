@@ -80,6 +80,8 @@ dependencies {
     implementation 'io.github.jav:expo-server-sdk:1.1.0'
 
     testImplementation 'junit:junit:4.5'
+
+    implementation 'com.sendgrid:sendgrid-java:4.0.1'
 }
 
 test {
