@@ -5,9 +5,9 @@ spring:
   datasource:
     platform: postgres
     driverClassName: org.postgresql.Driver
-    jdbc-url: jdbc:postgresql://localhost:5432/echocap
-    username: echocap
-    password: EchoCap123!
+    jdbc-url: ${SPRING_DATASOURCE_JDBC_URL}
+    username: ${SPRING_DATASOURCE_USERNAME}
+    password: ${SPRING_DATASOURCE_PASSWORD}
   jpa:
     database-platform: io.github.jhipster.domain.util.FixedPostgreSQL82Dialect
     database: POSTGRESQL
@@ -28,31 +28,18 @@ spring:
         format_sql: true
   security:
     jwt:
-      
-    oauth2:
-      client:
-        registration:
-          cognito:
-            clientId: 6an5knq5f1uv3utcpj3s3mgu8a
-            clientSecret: 
-            scope: openid
-            redirect-uri: http://localhost:8080/login/oauth2/code/cognito
-            clientName: EchoCap
-        provider:
-          cognito:
-            issuerUri: https://cognito-idp.ap-southeast-2.amazonaws.com/ap-southeast-2_kafumYAea
-            user-name-attribute: cognito:username
+      secret: ${JWT_SECRET}
   servlet:
     multipart:
       max-file-size: 10MB
       max-request-size: 10MB
   sendgrid:
-    
+    api-key: ${SENDGRID_API_KEY}
     from: nick@sounditout.app
 open-ai:
-  
+  api-key: ${OPENAI_API_KEY}
   model: gpt-3.5-turbo
 microsoft:
   computer-vision:
-    
+    subscription-key: ${MICROSOFT_COMPUTER_VISION_SUBSCRIPTION_KEY}
     endpoint: https://sounditout-image-captioner.cognitiveservices.azure.com/

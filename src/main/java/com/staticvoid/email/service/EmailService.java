@@ -1,13 +1,10 @@
 package com.staticvoid.email.service;
 
-import com.sendgrid.Content;
-import com.sendgrid.Email;
-import com.sendgrid.Mail;
-import com.sendgrid.Method;
-import com.sendgrid.Personalization;
-import com.sendgrid.Request;
-import com.sendgrid.Response;
-import com.sendgrid.SendGrid;
+import com.sendgrid.*;
+import com.sendgrid.helpers.mail.Mail;
+import com.sendgrid.helpers.mail.objects.Content;
+import com.sendgrid.helpers.mail.objects.Email;
+import com.sendgrid.helpers.mail.objects.Personalization;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -43,9 +40,9 @@ public class EmailService {
         Mail mail = new Mail();
         mail.setTemplateId("d-fbb4a70adf284346b45e7b833b73816f");
         mail.setFrom(fromEmail);
-        mail.addCustomArg("{url}", url);
         Personalization personalization = new Personalization();
         personalization.addTo(toEmail);
+        personalization.addDynamicTemplateData("url", url);
         mail.addPersonalization(personalization);
         sendMail(mail);
     }

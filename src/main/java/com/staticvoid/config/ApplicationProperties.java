@@ -1,4 +1,4 @@
-package config;
+package com.staticvoid.config;
 
 import com.zaxxer.hikari.HikariDataSource;
 import org.springframework.boot.context.properties.ConfigurationProperties;
@@ -21,7 +21,6 @@ import javax.persistence.EntityManagerFactory;
 
 @Configuration
 @ConfigurationProperties(prefix = "application", ignoreUnknownFields = false)
-@EnableJpaRepositories("com.staticvoid")
 @EnableTransactionManagement
 public class ApplicationProperties {
 

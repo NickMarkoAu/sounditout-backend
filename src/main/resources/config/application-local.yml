@@ -1,0 +1,20 @@
+spring:
+  application:
+    name: SoundItOut
+    isAlphaMode: true
+  datasource:
+    platform: postgres
+    driverClassName: org.postgresql.Driver
+    jdbc-url: jdbc:postgresql://localhost:5432/sounditout
+    username: sounditout
+    password: SoundItOut123!
+  security:
+    jwt:
+      
+  sendgrid:
+    
+open-ai:
+  
+microsoft:
+  computer-vision:
+    

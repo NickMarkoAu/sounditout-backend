@@ -67,6 +67,8 @@ public class ApplicationUser implements Serializable, UserDetails {
     )
     private List<ApplicationUser> following;
 
+    private boolean isEmailConfirmed = false;
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return Collections.emptyList();

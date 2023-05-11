@@ -1,6 +1,6 @@
 package com.staticvoid;
 
-import config.ApplicationProperties;
+import com.staticvoid.config.ApplicationProperties;
 import liquibase.repackaged.org.apache.commons.lang3.StringUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.SpringApplication;

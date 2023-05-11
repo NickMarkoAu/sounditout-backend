@@ -1,4 +1,4 @@
-package config;
+package com.staticvoid.config;
 
 import org.springframework.context.annotation.Configuration;
 

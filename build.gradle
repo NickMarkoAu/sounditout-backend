@@ -81,7 +81,7 @@ dependencies {
 
     testImplementation 'junit:junit:4.5'
 
-    implementation 'com.sendgrid:sendgrid-java:4.0.1'
+    implementation 'com.sendgrid:sendgrid-java:4.9.3'
 }
 
 test {
