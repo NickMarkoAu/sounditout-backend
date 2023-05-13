@@ -13,8 +13,8 @@ spring:
       
   sendgrid:
     
-open-ai:
-  
-microsoft:
-  computer-vision:
+  open-ai:
     
+  microsoft:
+    computer-vision:
+      

@@ -32,8 +32,8 @@ public class CaptionService implements ImageRecognitionService {
 
     private final RestTemplate restTemplate;
 
-    public CaptionService(@Value("${microsoft.computer-vision.subscription-key}") String subscriptionKey,
-                          @Value("${microsoft.computer-vision.endpoint}") String endpoint,
+    public CaptionService(@Value("${spring.microsoft.computer-vision.subscription-key}") String subscriptionKey,
+                          @Value("${spring.microsoft.computer-vision.endpoint}") String endpoint,
                           @Autowired RestTemplate restTemplate) {
         this.subscriptionKey = subscriptionKey;
         this.endpoint = endpoint;

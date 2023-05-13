@@ -1,5 +1,6 @@
 package com.staticvoid.email.service;
 
+import com.staticvoid.user.domain.ApplicationUser;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
@@ -21,12 +22,29 @@ class EmailServiceTest {
 
     @Test
     void should_send_email() {
-        emailService.sendEmail("nick.marko.au@gmail.com", "Test Subject", "Test Body");
+        ApplicationUser user = ApplicationUser.builder()
+                .name("Test User")
+                .email("test@sounditout.app")
+                .build();
+        emailService.sendEmail(user, "Test Subject", "Test Body");
     }
 
     @Test
     void should_send_confirm_email() {
-        emailService.sendConfirmEmail("nick.marko.au@gmail.com", "https://google.com");
+        ApplicationUser user = ApplicationUser.builder()
+                .name("Test User")
+                .email("test@sounditout.app")
+                .build();
+        emailService.sendConfirmEmail(user);
+    }
+
+    @Test
+    void should_send_forgot_password_email() {
+        ApplicationUser user = ApplicationUser.builder()
+                .name("Test User")
+                .email("test@sounditout.app")
+                .build();
+        emailService.sendForgotEmail(user);
     }
 
 }

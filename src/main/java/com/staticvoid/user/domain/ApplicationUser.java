@@ -1,11 +1,7 @@
 package com.staticvoid.user.domain;
 
 import com.staticvoid.image.domain.Image;
-import lombok.Data;
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 import org.hibernate.Hibernate;
 import org.hibernate.annotations.NotFound;
 import org.hibernate.annotations.NotFoundAction;
@@ -32,7 +28,9 @@ import java.util.Objects;
 @Getter
 @Setter
 @ToString
-@RequiredArgsConstructor
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class ApplicationUser implements Serializable, UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -67,7 +65,8 @@ public class ApplicationUser implements Serializable, UserDetails {
     )
     private List<ApplicationUser> following;
 
-    private boolean isEmailConfirmed = false;
+    @Builder.Default
+    private boolean enabled = false;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -101,7 +100,7 @@ public class ApplicationUser implements Serializable, UserDetails {
 
     @Override
     public boolean isEnabled() {
-        return true;
+        return enabled;
     }
 
     @Override

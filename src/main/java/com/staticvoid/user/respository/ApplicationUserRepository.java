@@ -10,7 +10,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface ApplicationUserRepository extends JpaRepository<ApplicationUser, Long> {
 
-    ApplicationUser findByEmail(String email);
+    ApplicationUser findByEmailIgnoreCase(String email);
 
     @Query(value = "SELECT * FROM applicationuser WHERE name LIKE CONCAT('%', ?1, '%') OR email LIKE CONCAT('%', ?1, '%') ORDER BY name ASC",
             countQuery = "SELECT COUNT(*) FROM applicationuser WHERE name LIKE CONCAT('%', ?1, '%') OR email LIKE CONCAT('%', ?1, '%')",

@@ -24,8 +24,8 @@ public class TextGenerationChatService {
     private static final Double TEMPERATURE = 0.5;
     private static final Duration TIMEOUT = Duration.of(60L, ChronoUnit.SECONDS);
 
-    public TextGenerationChatService(@Value("${openai.api-key}") String apiKey,
-                                     @Value("${openai.model}") String model) {
+    public TextGenerationChatService(@Value("${spring.open-ai.api-key}") String apiKey,
+                                     @Value("${spring.open-ai.model}") String model) {
         this.apiKey = apiKey;
         this.model = model;
     }

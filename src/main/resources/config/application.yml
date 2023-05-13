@@ -35,11 +35,16 @@ spring:
       max-request-size: 10MB
   sendgrid:
     api-key: ${SENDGRID_API_KEY}
-    from: nick@sounditout.app
-open-ai:
-  api-key: ${OPENAI_API_KEY}
-  model: gpt-3.5-turbo
-microsoft:
-  computer-vision:
-    subscription-key: ${MICROSOFT_COMPUTER_VISION_SUBSCRIPTION_KEY}
-    endpoint: https://sounditout-image-captioner.cognitiveservices.azure.com/
+    fromEmail: nick@sounditout.app
+    fromName: SoundItOut
+    confirmEmailTemplate: "d-fbb4a70adf284346b45e7b833b73816f"
+    confirmEmailBaseUrl: "https://sounditout.app"
+    forgotPasswordTemplate: "d-5422a81b6fdb40a1a5b3547d56f12a63"
+    forgotPasswordBaseUrl: "https://sounditout.app"
+  open-ai:
+    api-key: ${OPENAI_API_KEY}
+    model: gpt-3.5-turbo
+  microsoft:
+    computer-vision:
+      subscription-key: ${MICROSOFT_COMPUTER_VISION_SUBSCRIPTION_KEY}
+      endpoint: https://sounditout-image-captioner.cognitiveservices.azure.com/

@@ -4,6 +4,7 @@ import com.staticvoid.security.domain.JwtRequest;
 import com.staticvoid.security.domain.JwtResponse;
 import com.staticvoid.security.jwt.JwtTokenUtil;
 import com.staticvoid.user.domain.ApplicationUser;
+import com.staticvoid.user.domain.PasswordResetToken;
 import com.staticvoid.user.domain.dto.ApplicationUserDto;
 import com.staticvoid.user.service.ApplicationUserService;
 import io.jsonwebtoken.impl.DefaultClaims;
@@ -13,11 +14,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.DisabledException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
@@ -56,6 +53,33 @@ public class JwtAuthenticationController {
     @PostMapping(value = "/api/auth/register")
     public ResponseEntity<?> saveUser(@RequestBody ApplicationUserDto user) throws Exception {
         return ResponseEntity.ok(userDetailsService.saveNew(user));
+    }
+
+    @PostMapping(value = "/api/auth/request-reset/")
+    public ResponseEntity<?> requestPasswordReset(@RequestBody ApplicationUserDto user) throws Exception {
+        try {
+            userDetailsService.forgotPassword(user.toEntity());
+            return ResponseEntity.ok("If a user with that email exists, a password reset email has been sent.");
+        } catch(Exception e) {
+            return ResponseEntity.internalServerError().body(e.getMessage());
+        }
+    }
+
+    @PostMapping(value = "/api/auth/validate-reset/{token}")
+    public ResponseEntity<?> validatePasswordResetToken(@PathVariable("token") String token, @RequestBody JwtRequest authenticationRequest) throws Exception {
+        try {
+            ApplicationUser user = userDetailsService.loadUserByUsername(authenticationRequest.getUsername());
+            if(user == null) {
+                return ResponseEntity.badRequest().body("Invalid token");
+            }
+            PasswordResetToken resetToken = userDetailsService.validatePasswordResetToken(token, user);
+            if(resetToken != null) {
+                user = userDetailsService.updatePassword(user, authenticationRequest.getPassword());
+            }
+            return ResponseEntity.ok(user);
+        } catch(Exception e) {
+            return ResponseEntity.internalServerError().body(e.getMessage());
+        }
     }
 
     private void authenticate(String username, String password) throws Exception {
