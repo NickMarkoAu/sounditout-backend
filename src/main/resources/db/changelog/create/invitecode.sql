@@ -9,6 +9,4 @@ create table if not exists invitecode
             references applicationuser
 );
 
-alter table invitecode
-    owner to sounditout;
 

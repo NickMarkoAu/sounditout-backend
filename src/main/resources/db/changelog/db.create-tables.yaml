@@ -4,7 +4,7 @@ databaseChangeLog:
       author: nickmarko
       changes:
         - sqlFile:
-            path: create/applicationuser.sql
+            path: create/applicationusertokens.sql
             relativeToChangelogFile: true
             splitStatements: true
             stripComments: true
@@ -13,7 +13,7 @@ databaseChangeLog:
       author: nickmarko
       changes:
         - sqlFile:
-            path: create/applicationusertokens.sql
+            path: create/applicationuser.sql
             relativeToChangelogFile: true
             splitStatements: true
             stripComments: true
@@ -22,7 +22,7 @@ databaseChangeLog:
       author: nickmarko
       changes:
         - sqlFile:
-            path: create/comment.sql
+            path: create/confirmationtoken.sql
             relativeToChangelogFile: true
             splitStatements: true
             stripComments: true
@@ -31,7 +31,7 @@ databaseChangeLog:
       author: nickmarko
       changes:
         - sqlFile:
-            path: create/confirmationtoken.sql
+            path: create/image.sql
             relativeToChangelogFile: true
             splitStatements: true
             stripComments: true
@@ -40,7 +40,7 @@ databaseChangeLog:
       author: nickmarko
       changes:
         - sqlFile:
-            path: create/image.sql
+            path: create/invitecode.sql
             relativeToChangelogFile: true
             splitStatements: true
             stripComments: true
@@ -49,7 +49,7 @@ databaseChangeLog:
       author: nickmarko
       changes:
         - sqlFile:
-            path: create/invitecode.sql
+            path: create/passwordresettoken.sql
             relativeToChangelogFile: true
             splitStatements: true
             stripComments: true
@@ -58,7 +58,7 @@ databaseChangeLog:
       author: nickmarko
       changes:
         - sqlFile:
-            path: create/passwordresettoken.sql
+            path: create/post.sql
             relativeToChangelogFile: true
             splitStatements: true
             stripComments: true
@@ -67,7 +67,7 @@ databaseChangeLog:
       author: nickmarko
       changes:
         - sqlFile:
-            path: create/post.sql
+            path: create/comment.sql
             relativeToChangelogFile: true
             splitStatements: true
             stripComments: true

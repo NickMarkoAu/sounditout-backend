@@ -10,6 +10,3 @@ create table if not exists songmetadata
             references song
 );
 
-alter table songmetadata
-    owner to sounditout;
-

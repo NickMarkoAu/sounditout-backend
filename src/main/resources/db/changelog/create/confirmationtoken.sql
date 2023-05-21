@@ -9,6 +9,4 @@ create table if not exists confirmationtoken
             references applicationuser
 );
 
-alter table confirmationtoken
-    owner to sounditout;
 

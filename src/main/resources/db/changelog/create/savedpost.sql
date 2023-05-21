@@ -6,6 +6,4 @@ create table if not exists savedpost
     user_id bigint
 );
 
-alter table savedpost
-    owner to sounditout;
 

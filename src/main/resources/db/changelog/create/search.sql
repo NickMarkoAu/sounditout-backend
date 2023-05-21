@@ -9,7 +9,3 @@ create table if not exists search
         constraint fkoetowknt3t0ba4ljrr3k6limx
             references applicationuser
 );
-
-alter table search
-    owner to sounditout;
-

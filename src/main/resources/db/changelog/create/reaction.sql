@@ -7,6 +7,4 @@ create table if not exists reaction
     user_id      bigint
 );
 
-alter table reaction
-    owner to sounditout;
 

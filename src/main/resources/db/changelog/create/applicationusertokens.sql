@@ -5,6 +5,3 @@ create table if not exists applicationusertokens
     freetokens bigint,
     tokens     bigint
 );
-
-alter table applicationusertokens
-    owner to sounditout;

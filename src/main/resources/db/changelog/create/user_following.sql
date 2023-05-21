@@ -7,7 +7,3 @@ create table if not exists user_following
         constraint fkqj2w2sw8w4gpiddgwjn7w69jh
             references applicationuser
 );
-
-alter table user_following
-    owner to sounditout;
-

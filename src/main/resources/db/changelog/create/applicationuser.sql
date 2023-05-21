@@ -13,6 +13,3 @@ create table if not exists applicationuser
     isemailconfirmed boolean not null,
     enabled          boolean not null
 );
-
-alter table applicationuser
-    owner to sounditout;

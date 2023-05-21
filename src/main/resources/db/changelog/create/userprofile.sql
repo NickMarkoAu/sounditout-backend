@@ -10,7 +10,3 @@ create table if not exists userprofile
         constraint fk2ueco7k31sbkhungw9cuyg28m
             references applicationuser
 );
-
-alter table userprofile
-    owner to sounditout;
-

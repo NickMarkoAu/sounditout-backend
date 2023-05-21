@@ -8,6 +8,3 @@ create table if not exists user_followers
             references applicationuser
 );
 
-alter table user_followers
-    owner to sounditout;
-

@@ -6,6 +6,3 @@ create table if not exists image
     tags   varchar(255),
     userid bigint
 );
-
-alter table image
-    owner to sounditout;

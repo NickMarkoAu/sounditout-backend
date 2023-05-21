@@ -10,6 +10,4 @@ create table if not exists comment
             references post
 );
 
-alter table comment
-    owner to sounditout;
 

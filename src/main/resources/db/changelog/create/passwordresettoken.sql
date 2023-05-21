@@ -9,6 +9,4 @@ create table if not exists passwordresettoken
             references applicationuser
 );
 
-alter table passwordresettoken
-    owner to sounditout;
 

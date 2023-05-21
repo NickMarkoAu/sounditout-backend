@@ -15,6 +15,4 @@ create table if not exists post
             references applicationuser
 );
 
-alter table post
-    owner to sounditout;
 

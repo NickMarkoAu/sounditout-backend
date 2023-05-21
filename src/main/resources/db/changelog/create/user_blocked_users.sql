@@ -10,6 +10,3 @@ create table if not exists user_blocked_users
             references applicationuser
 );
 
-alter table user_blocked_users
-    owner to sounditout;
-

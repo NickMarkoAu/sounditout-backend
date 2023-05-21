@@ -9,6 +9,4 @@ create table if not exists song
     userid  varchar(255)
 );
 
-alter table song
-    owner to sounditout;
 
