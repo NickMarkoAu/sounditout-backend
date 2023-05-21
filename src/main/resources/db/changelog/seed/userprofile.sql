@@ -1,0 +1,1 @@
+INSERT INTO public.userprofile (id, bio, song_id, user_id) VALUES (1, 'My user profile', 3, 1);

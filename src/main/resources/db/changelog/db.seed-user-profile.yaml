@@ -1,0 +1,10 @@
+databaseChangeLog:
+  - changeSet:
+      id: 20
+      author: nickmarko
+      changes:
+        - sqlFile:
+            path: seed/userprofile.sql
+            relativeToChangelogFile: true
+            splitStatements: true
+            stripComments: true

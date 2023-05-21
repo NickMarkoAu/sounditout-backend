@@ -11,3 +11,9 @@ databaseChangeLog:
   - include:
       file: db.seed-image.yaml
       relativeToChangelogFile: true
+  - include:
+      file: db.seed-song.yaml
+      relativeToChangelogFile: true
+  - include:
+      file: db.seed-user-profile.yaml
+      relativeToChangelogFile: true
