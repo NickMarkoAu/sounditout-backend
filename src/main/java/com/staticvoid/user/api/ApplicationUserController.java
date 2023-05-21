@@ -28,6 +28,16 @@ public class ApplicationUserController {
         }
     }
 
+    @GetMapping("/api/user/block/{userId}")
+    public ResponseEntity<?> blockUser(@PathVariable Long userId) {
+        try {
+            return ResponseEntity.ok(userDetailsService.blockUser(userId));
+        } catch (Exception e) {
+            log.error("Could not return user: ", e);
+            return ResponseEntity.internalServerError().body(e.getMessage());
+        }
+    }
+
     @GetMapping("/api/user/token/{token}")
     public ResponseEntity<?> getUserFromToken(@PathVariable String token) {
         try {

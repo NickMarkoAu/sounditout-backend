@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -122,6 +123,19 @@ public class ApplicationUserService implements UserDetailsService {
             throw new RuntimeException("Token expired");
         }
         return passToken;
+    }
+
+    public boolean blockUser(Long userId) {
+        ApplicationUser blockedUser = userRepository.findById(userId).orElse(null);
+        ApplicationUser loggedInUser = userRepository.findById(((ApplicationUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getId()).orElse(null);
+        if(blockedUser == null || loggedInUser == null) {
+            return false;
+        }
+        loggedInUser.getBlockedUsers().add(blockedUser);
+        loggedInUser.getFollowers().remove(blockedUser);
+        loggedInUser.getFollowing().remove(blockedUser);
+        userRepository.save(loggedInUser);
+        return true;
     }
 
     private boolean isTokenFound(PasswordResetToken passToken) {
