@@ -121,8 +121,8 @@ public class PostService {
         return postRepository.countAllByUser(user);
     }
 
-    public Page<Post> search(String query, Pageable pageable) {
-        return postRepository.search(query, pageable);
+    public Page<Post> search(String query, List<Long> blockedUsers, Pageable pageable) {
+        return postRepository.search(query, blockedUsers, pageable);
     }
 
 }

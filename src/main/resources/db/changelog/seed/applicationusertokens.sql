@@ -1,0 +1,1 @@
+INSERT INTO public.applicationusertokens (id, freetokens, tokens) VALUES (1, 10, 10);

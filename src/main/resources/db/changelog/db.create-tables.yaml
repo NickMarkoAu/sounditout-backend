@@ -1,0 +1,154 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1
+      author: nickmarko
+      changes:
+        - sqlFile:
+            path: create/applicationuser.sql
+            relativeToChangelogFile: true
+            splitStatements: true
+            stripComments: true
+  - changeSet:
+      id: 2
+      author: nickmarko
+      changes:
+        - sqlFile:
+            path: create/applicationusertokens.sql
+            relativeToChangelogFile: true
+            splitStatements: true
+            stripComments: true
+  - changeSet:
+      id: 3
+      author: nickmarko
+      changes:
+        - sqlFile:
+            path: create/comment.sql
+            relativeToChangelogFile: true
+            splitStatements: true
+            stripComments: true
+  - changeSet:
+      id: 4
+      author: nickmarko
+      changes:
+        - sqlFile:
+            path: create/confirmationtoken.sql
+            relativeToChangelogFile: true
+            splitStatements: true
+            stripComments: true
+  - changeSet:
+      id: 5
+      author: nickmarko
+      changes:
+        - sqlFile:
+            path: create/image.sql
+            relativeToChangelogFile: true
+            splitStatements: true
+            stripComments: true
+  - changeSet:
+      id: 6
+      author: nickmarko
+      changes:
+        - sqlFile:
+            path: create/invitecode.sql
+            relativeToChangelogFile: true
+            splitStatements: true
+            stripComments: true
+  - changeSet:
+      id: 7
+      author: nickmarko
+      changes:
+        - sqlFile:
+            path: create/passwordresettoken.sql
+            relativeToChangelogFile: true
+            splitStatements: true
+            stripComments: true
+  - changeSet:
+      id: 8
+      author: nickmarko
+      changes:
+        - sqlFile:
+            path: create/post.sql
+            relativeToChangelogFile: true
+            splitStatements: true
+            stripComments: true
+  - changeSet:
+      id: 9
+      author: nickmarko
+      changes:
+        - sqlFile:
+            path: create/reaction.sql
+            relativeToChangelogFile: true
+            splitStatements: true
+            stripComments: true
+  - changeSet:
+      id: 10
+      author: nickmarko
+      changes:
+        - sqlFile:
+            path: create/savedpost.sql
+            relativeToChangelogFile: true
+            splitStatements: true
+            stripComments: true
+  - changeSet:
+      id: 11
+      author: nickmarko
+      changes:
+        - sqlFile:
+            path: create/search.sql
+            relativeToChangelogFile: true
+            splitStatements: true
+            stripComments: true
+  - changeSet:
+      id: 12
+      author: nickmarko
+      changes:
+        - sqlFile:
+            path: create/song.sql
+            relativeToChangelogFile: true
+            splitStatements: true
+            stripComments: true
+  - changeSet:
+      id: 13
+      author: nickmarko
+      changes:
+        - sqlFile:
+            path: create/songmetadata.sql
+            relativeToChangelogFile: true
+            splitStatements: true
+            stripComments: true
+  - changeSet:
+      id: 14
+      author: nickmarko
+      changes:
+        - sqlFile:
+            path: create/user_blocked_users.sql
+            relativeToChangelogFile: true
+            splitStatements: true
+            stripComments: true
+  - changeSet:
+      id: 15
+      author: nickmarko
+      changes:
+        - sqlFile:
+            path: create/user_followers.sql
+            relativeToChangelogFile: true
+            splitStatements: true
+            stripComments: true
+  - changeSet:
+      id: 16
+      author: nickmarko
+      changes:
+        - sqlFile:
+            path: create/user_following.sql
+            relativeToChangelogFile: true
+            splitStatements: true
+            stripComments: true
+  - changeSet:
+      id: 17
+      author: nickmarko
+      changes:
+        - sqlFile:
+            path: create/userprofile.sql
+            relativeToChangelogFile: true
+            splitStatements: true
+            stripComments: true

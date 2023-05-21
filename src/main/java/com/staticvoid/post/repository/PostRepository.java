@@ -28,8 +28,8 @@ public interface PostRepository extends JpaRepository<Post, Long> {
     Long countAllByUser(ApplicationUser user);
 
     //TODO add privacy, will need to join to see if user is following
-    @Query(value = "SELECT * FROM post p INNER JOIN user u ON p.user_id=u.id WHERE LOWER(p.content) LIKE CONCAT('%',LOWER(?1),'%') OR LOWER(p.tags) LIKE CONCAT('%',LOWER(?1),'%') OR LOWER(u.name) LIKE CONCAT('%', LOWER(?1), '%') ORDER BY p.date DESC",
-            countQuery = "SELECT COUNT(*) FROM post p INNER JOIN user u ON p.user_id=u.id WHERE LOWER(p.content) LIKE CONCAT('%',LOWER(?1),'%') OR LOWER(p.tags) LIKE CONCAT('%',LOWER(?1),'%') OR LOWER(u.name) LIKE CONCAT('%', LOWER(?1), '%')",
+    @Query(value = "SELECT * FROM post p INNER JOIN user u ON p.user_id=u.id WHERE LOWER(p.content) LIKE CONCAT('%',LOWER(?1),'%') OR LOWER(p.tags) LIKE CONCAT('%',LOWER(?1),'%') OR LOWER(u.name) LIKE CONCAT('%', LOWER(?1), '%') AND u.id NOT IN(?2) ORDER BY p.date DESC",
+            countQuery = "SELECT COUNT(*) FROM post p INNER JOIN user u ON p.user_id=u.id WHERE LOWER(p.content) LIKE CONCAT('%',LOWER(?1),'%') OR LOWER(p.tags) LIKE CONCAT('%',LOWER(?1),'%') OR LOWER(u.name) LIKE CONCAT('%', LOWER(?1), '%') AND u.id NOT IN(?2)",
             nativeQuery = true)
-    Page<Post> search(String query, Pageable pageable);
+    Page<Post> search(String query, List<Long> blockedUsers, Pageable pageable);
 }

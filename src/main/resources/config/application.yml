@@ -3,16 +3,23 @@ spring:
     name: SoundItOut
     isAlphaMode: true
   datasource:
-    platform: postgres
     driverClassName: org.postgresql.Driver
     jdbc-url: ${SPRING_DATASOURCE_JDBC_URL}
     username: ${SPRING_DATASOURCE_USERNAME}
     password: ${SPRING_DATASOURCE_PASSWORD}
+  sql:
+    init:
+      platform: postgres
+  session:
+    jdbc:
+      table-name: SPRING_SESSION
+      initialize-schema: always
   jpa:
     database-platform: io.github.jhipster.domain.util.FixedPostgreSQL82Dialect
     database: POSTGRESQL
     show-sql: true
     hibernate:
+      ddl-auto: validate
       naming:
         physical-strategy: org.springframework.boot.orm.jpa.hibernate.SpringPhysicalNamingStrategy
         implicit-strategy: org.springframework.boot.orm.jpa.hibernate.SpringImplicitNamingStrategy
@@ -48,3 +55,4 @@ spring:
     computer-vision:
       subscription-key: ${MICROSOFT_COMPUTER_VISION_SUBSCRIPTION_KEY}
       endpoint: https://sounditout-image-captioner.cognitiveservices.azure.com/
+

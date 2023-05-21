@@ -1,0 +1,1 @@
+INSERT INTO public.applicationuser (id, dateofbirth, email, name, password, profile_image_id, tokens_id, isemailconfirmed, enabled) VALUES (1, '1993-06-23 00:00:00.000000', 'nick@sounditout.app', 'Nick Marko', '$2a$12$1/Xbl61gUxaJg5JMAv8p.eaYex88Rlguy9/16QfSfZ59Wq59UaRLu', 1, 1, true, true);

@@ -1,0 +1,10 @@
+databaseChangeLog:
+  - changeSet:
+      id: 19
+      author: nickmarko
+      changes:
+        - sqlFile:
+            path: seed/applicationusertokens.sql
+            relativeToChangelogFile: true
+            splitStatements: true
+            stripComments: true

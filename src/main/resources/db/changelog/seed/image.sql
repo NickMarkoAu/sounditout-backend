@@ -1,0 +1,1 @@
+INSERT INTO public.image (id, s3uri, tags, userid) VALUES (1, '1/images/681e9b71-2cae-448b-a19b-da27599ce892.jpeg', null, 1);

@@ -63,14 +63,12 @@ public class S3StorageService {
     private Image fileNameToImage(String filename) {
         String s3Uri = s3.getResourceUrl(BUCKET_NAME, filename);
         Image image = new Image();
-        image.setFileName(filename);
         image.setS3uri(s3Uri);
         return image;
     }
 
     private Image s3KeyAndUserToImage(String s3Key, ApplicationUser user) {
         Image image = new Image();
-        image.setFileName(s3Key);
         image.setS3uri(s3Key);
         image.setUserId(user.getId());
         return image;

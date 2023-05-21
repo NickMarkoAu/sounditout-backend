@@ -41,7 +41,6 @@ public class ImageDto implements Serializable {
         ObjectMapper mapper = new ObjectMapper();
         ImageDto imageDto = new ImageDto();
         imageDto.setId(image.getId());
-        imageDto.setFileName(image.getFileName());
         imageDto.setUserId(image.getUserId());
         //get presigned URL from S3
         imageDto.setPresignedUrl(AwsUtil.generatePresignedUrl(image.getS3uri()).toString());

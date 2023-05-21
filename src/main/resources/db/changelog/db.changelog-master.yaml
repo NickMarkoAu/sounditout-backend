@@ -1,2 +1,13 @@
 databaseChangeLog:
-  - 
+  - include:
+        file: db.create-tables.yaml
+        relativeToChangelogFile: true
+  - include:
+      file: db.seed-application-user-tokens.yaml
+      relativeToChangelogFile: true
+  - include:
+      file: db.seed-application-user.yaml
+      relativeToChangelogFile: true
+  - include:
+      file: db.seed-image.yaml
+      relativeToChangelogFile: true

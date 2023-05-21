@@ -3,8 +3,6 @@ spring:
     name: SoundItOut
     isAlphaMode: true
   datasource:
-    platform: postgres
-    driverClassName: org.postgresql.Driver
     jdbc-url: jdbc:postgresql://localhost:5432/sounditout
     username: sounditout
     password: SoundItOut123!

@@ -17,6 +17,8 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Service
 @Slf4j
 @AllArgsConstructor
@@ -91,7 +93,7 @@ public class UserProfileService {
         return userProfileDto;
     }
 
-    public Page<UserProfile> search(String query, Pageable pageable) {
-        return userProfileRepository.search(query, pageable);
+    public Page<UserProfile> search(String query, List<Long> blockedUsers, Long userId, Pageable pageable) {
+        return userProfileRepository.search(query, blockedUsers, userId, pageable);
     }
 }

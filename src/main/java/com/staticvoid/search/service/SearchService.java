@@ -40,14 +40,22 @@ public class SearchService {
     }
 
     public Page<UserProfileDto> searchUsers(String query, Pageable pageable) {
-        Page<UserProfile> userPage = userProfileService.search(query, pageable);
+        //Exclude blocked users from search
+        ApplicationUser loggedInUser = (ApplicationUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        List<Long> blockedUsers = loggedInUser.getBlockedUsers().stream().map(ApplicationUser::getId).collect(Collectors.toList());
+
+        Page<UserProfile> userPage = userProfileService.search(query, blockedUsers, loggedInUser.getId(), pageable);
         List<UserProfileDto> users = userPage.stream().map(UserProfileDto::toDto).collect(Collectors.toList());
         saveSearch(query, SearchDto.SearchType.USER);
         return new PageImpl<>(users, pageable, userPage.getTotalElements());
     }
 
     public Page<PostDto> searchPosts(String query, Pageable pageable) {
-        Page<Post> postPage = postService.search(query, pageable);
+        //Exclude blocked users from search
+        ApplicationUser loggedInUser = (ApplicationUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        List<Long> blockedUsers = loggedInUser.getBlockedUsers().stream().map(ApplicationUser::getId).collect(Collectors.toList());
+
+        Page<Post> postPage = postService.search(query, blockedUsers, pageable);
         List<PostDto> posts = postPage.stream().map(PostDto::toDtoNoComments).collect(Collectors.toList());
         saveSearch(query, SearchDto.SearchType.POST);
         return new PageImpl<>(posts, pageable, postPage.getTotalElements());
