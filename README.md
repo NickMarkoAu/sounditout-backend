@@ -1,4 +1,4 @@
-<img src="https://SoundItOut.app/assets/img/logo.png " alt="SoundItOut Logo" title="SoundItOut Logo" height="100" />
+![Logo](/public/logo.png)
 
 # SoundItOut
 [sounditout.app](https://sounditout.app)
@@ -46,13 +46,3 @@ SoundItOut is available for both iOS and Android platforms. You can download the
 3. Let the app analyze your photo and suggest a song.
 4. Listen to the song and decide if it matches your mood.
 5. Share your paired photo and song on social media.
-
-## Support
-
-If you encounter any problems or have any questions about SoundItOut, please contact our support team at support@SoundItOut.app. We're here to help!
-
-## Contributing
-
-SoundItOut is currently not open for contributions. Please feel free to share your feedback and suggestions by contacting us at feedback@SoundItOut.app.
-
-Thank you for using SoundItOut, the app that brings your memories to life with music!
